@@ -115,7 +115,7 @@ function Home() {
     setArtistDesc("");
   }
   return (
-    
+    <div className = 'bg'>
     <div className="App">
 
       <div className="box">
@@ -270,7 +270,7 @@ function Home() {
 
     </div>
 
-    
+    </div>
   );
 }
 

@@ -1,15 +1,9 @@
 
-body {
-  background-image: url("bg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  margin: 0px;
-  height: 100vh;
 
-  /* display: flex;
-  justify-content: center; */
+.bg {
+  background-image: url("bg.png")!important;
 }
+
 
 .App {
   width: 100%;
