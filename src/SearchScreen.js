@@ -3,8 +3,8 @@ import './SearchScreen.css';
 import ResultList from './component/ResultList';
 import CatagoryItem from './component/CatagoryItem';
 import axios from 'axios';
-
-
+import logo from './logo.png'
+import userPic from './user.png'
 function SearchScreen() {
   
   const [result , setResult] = useState('a') ; 
@@ -45,7 +45,28 @@ function SearchScreen() {
   
   return (
     <div className = 'bg'>
-    <div  style={{display:'flex',justifyContent:"center"}}>
+   
+    <div id = 'navbar'>
+    <img src= {logo} alt = 'ym picture' width="433" height="112"/>
+
+    <div id = 'user-zone'>
+      <div className = 'half-user' >
+      <img className = 'user-profile' src= {userPic} alt = 'ym picture' width="24" height="24"/>
+      <text className = 'user-name'>Chawin Gowanit</text>
+      </div>
+      <div className = 'half-user'>
+        <div className = 'home-button'>
+            Home
+        </div>
+        <div className = 'search-button'>
+            Search Artist
+        </div>
+        <div className = 'home-button'>
+            About
+        </div>
+      </div>
+    </div>
+    </div>
     <div id = 'container'>
       <div id = 'search-pane'>
           
@@ -186,7 +207,7 @@ function SearchScreen() {
       </div>
      
     </div>
-    </div>
+   
 
 
     <div style={{display:'flex',justifyContent:"center"}}>

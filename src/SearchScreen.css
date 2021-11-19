@@ -4,10 +4,80 @@
 .bg {
     background-image: url('./bg1.png') !important;
     background-size: cover !important;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+#navbar {
+    height : 112px ; 
+    width : 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+#user-zone{
+    width : 448px ; 
+    height : 112px ;
+    display: flex;
+    flex-direction: column;
+   
+  
+}
+
+.half-user {
+   flex : 1  ; 
+   flex-direction: row;
+   display: flex;
+   justify-content: center;
+   justify-content: flex-end;
+}
+.user-name {
+    margin-right: 24px;
+    font-size: 20px;
+    font-family: Asap;
+    font-weight: 400;
+    align-self: center;
+}
+.user-profile    {
+    margin-right: 8px;
+    align-self: center;
+    border-radius: 12px;
+}
+
+.home-button {
+    width : 130px; 
+    height : 56px; 
+    text-align: center;
+    font-size: 20px;
+    font-family: Asap;
+    font-weight: 400;
+    line-height: 56px;
+}
+.home-button:hover {
+    color: red;
+    cursor: pointer;
+}
+.search-button:hover{
+    color : red ; 
+    cursor: pointer;
+}
+.search-button {
+    width : 188px; 
+    height : 56px; 
+    text-align: center;
+    font-size: 20px;
+    font-family: Asap;
+    font-weight: 400;
+    line-height: 56px;
+    color: red;
 }
 #container {
     /* margin-top : 15.7vh ;  */
-    margin-top: 161px;
+    margin-top: 103px;
     min-height: 330px ; 
     /* height : 32.2vh;  */
     width: 591px;
@@ -17,6 +87,7 @@
     display: flex;
     position: relative;
     justify-self: center;
+    align-self: center;
     
    
 }
