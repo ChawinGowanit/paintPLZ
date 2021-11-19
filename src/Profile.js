@@ -8,6 +8,7 @@ import {
   Rate,
   Modal,
   Upload,
+  Checkbox,
 } from "antd";
 import { Row, Col, Tabs } from "antd";
 import Carousel from "react-multi-carousel";
@@ -33,6 +34,7 @@ const Profile = () => {
   const [upload, setUpload] = useState(false);
   const [edit, setEdit] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showConfirmEdit, setShowConfirmEdit] = useState(false);
   const [editName, setEditName] = useState(null);
   const [editDesc, setEditDesc] = useState(null);
   const [editTag, setEditTag] = useState(null);
@@ -670,8 +672,11 @@ const Profile = () => {
                 title="Delete Confirmation"
                 footer={null}
               >
-                <Row style={{ fontSize: 16, fontWeight: "bold" }}>
+                <Row style={{ fontSize: 16, fontWeight: "bold",marginBottom:10 }}>
                   Are you sure you want to delete this artwork?
+                </Row>
+                <Row>
+                  <Checkbox> Do not show next time</Checkbox>
                 </Row>
                 <Row style={{ width: "100%", marginTop: 25 }}>
                   <Col span={12}>
@@ -712,7 +717,12 @@ const Profile = () => {
               visible={edit}
               onOk={() => setEdit(false)}
               footer={null}
-              onCancel={() => setEdit(false)}
+              onCancel={() => {
+                setEdit(false);
+                setEditUrl();
+                setEditName(null);
+                setEditDesc(null);
+              }}
             >
               Artwork Name
               <Input
@@ -781,19 +791,65 @@ const Profile = () => {
                     background: "#4CD75F",
                     border: "none",
                   }}
-                  onClick={() =>
-                    confirmEdit(
-                      active.artworkID,
-                      editName,
-                      editDesc,
-                      editTag,
-                      editUrl
-                    )
-                  }
+                  onClick={() => setShowConfirmEdit(true)}
                 >
                   Submit
                 </Button>
               </Row>
+              <Modal
+                centered
+                onCancel={() => setShowConfirmEdit(false)}
+                visible={showConfirmEdit}
+                title="Edit Confirmation"
+                footer={null}
+              >
+                <Row
+                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+                >
+                  Are you sure you want to save the change?
+                </Row>
+                <Row>
+                  <Checkbox> Do not show next time</Checkbox>
+                </Row>
+                <Row style={{ width: "100%", marginTop: 25 }}>
+                  <Col span={12}>
+                    <Button
+                      type="round"
+                      style={{
+                        width: "95%",
+                        color: "white",
+                        background: "#4CD75F",
+                        border: "none",
+                      }}
+                      onClick={() => setShowConfirmEdit(false)}
+                    >
+                      Cancel <CloseCircleOutlined />
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      type="round"
+                      style={{
+                        color: "white",
+                        background: "#D74C7F",
+                        width: "95%",
+                        border: "none",
+                      }}
+                      onClick={() =>
+                        confirmEdit(
+                          active.artworkID,
+                          editName,
+                          editDesc,
+                          editTag,
+                          editUrl
+                        )
+                      }
+                    >
+                      Save <EditOutlined />
+                    </Button>
+                  </Col>
+                </Row>
+              </Modal>
             </Modal>
           )}
         </Content>
