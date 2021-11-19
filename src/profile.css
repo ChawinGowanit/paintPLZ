@@ -1,0 +1,19 @@
+.bg {
+    background-image: url('./bg-image.png');
+    background-size: cover;
+}
+
+.ant-upload {
+    background:#C7F1C8 !important;
+    width: 100%;
+}
+
+.ant-upload-picture-card-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.ant-upload.ant-upload-select-picture-card {
+    width:85% !important;
+}
+
