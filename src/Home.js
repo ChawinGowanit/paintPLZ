@@ -121,8 +121,8 @@ function Home() {
       <div className="box">
         <h1>PaintPlz</h1>
         <div className="button-control">
-          <button className="green-btn"onClick={openModal1}>Login</button>
-          <button className="green-btn"onClick={openModal2}>Register</button>
+          <button className="green-btn length-btn"onClick={openModal1}>Login</button>
+          <button className="green-btn length-btn"onClick={openModal2}>Register</button>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ function Home() {
         contentLabel="Register modal"
         className="modal"
       >
-        <div className="modal-content login-modal">
+        <div className="modal-content register-choice-modal">
           <div className="button-close">
             <span className="close" onClick={closeModal2}>&times;</span>
           </div>
@@ -178,7 +178,7 @@ function Home() {
         contentLabel="Register Customer modal"
         className="modal"
       >
-        <div className="modal-content">
+        <div className="modal-content register-modal">
           <div className="button-close">
             <span className="close" onClick={closeModal3}>&times;</span>
           </div>
@@ -218,7 +218,7 @@ function Home() {
         contentLabel="Register Customer modal"
         className="modal"
       >
-        <div className="modal-content">
+        <div className="modal-content register-modal">
           <div className="button-close">
             <span className="close" onClick={closeModal4}>&times;</span>
           </div>
