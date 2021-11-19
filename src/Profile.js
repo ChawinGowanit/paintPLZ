@@ -30,6 +30,49 @@ const { Search } = Input;
 const { Text } = Typography;
 
 const Profile = () => {
+  const [upload, setUpload] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [editName, setEditName] = useState(null);
+  const [editDesc, setEditDesc] = useState(null);
+  const [editTag, setEditTag] = useState(null);
+  const [editUrl, setEditUrl] = useState(null);
+  const [uploadName, setUploadName] = useState(null);
+  const [uploadDesc, setUploadDesc] = useState(null);
+  const [uploadTag, setUploadTag] = useState(null);
+  const [uploadUrl, setUploadUrl] = useState(null);
+  const [artwork, setArtwork] = useState([]);
+  const [active, setActive] = useState(null);
+  //const [user, setUser] = useState(null);
+
+  const user = {
+    userID: "00000005",
+    username: "DengXiaoPing",
+    name: "XiaoPing",
+    surname: "Deng",
+    rating: 4.9,
+    minimunPriceRate: 1000,
+    maximumPriceRate: 2000,
+    Biography: "I’m the fastest man alive.",
+  };
+
+  const getProfile = async () => {
+    try {
+      const res = await axios(
+        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      //setUser(res.data);
+      setArtwork(res.data.artwork);
+    } catch (err) {
+      throw err;
+    }
+  };
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -48,18 +91,6 @@ const Profile = () => {
       items: 1,
     },
   };
-
-  const [upload, setUpload] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  const [editName, setEditName] = useState(null);
-  const [editDesc, setEditDesc] = useState(null);
-  const [editTag, setEditTag] = useState(null);
-  const [editUrl, setEditUrl] = useState(null);
-  const [uploadName, setUploadName] = useState(null);
-  const [uploadDesc, setUploadDesc] = useState(null);
-  const [uploadTag, setUploadTag] = useState(null);
-  const [uploadUrl, setUploadUrl] = useState(null);
 
   const onClickUpload = () => {
     setUpload(true);
@@ -148,500 +179,528 @@ const Profile = () => {
     setUploadName(e.target.value);
   };
 
-  const artwork = [
+  const mockartwork = [
     {
-      id: 1,
-      name: "Monalisa",
+      artworkID: 1,
+      title: "Monalisa",
       description: "test",
-      tag: ["A", "B"],
-      img: "Artwork.png",
+      artTag: ["A", "B"],
+      url: "Artwork.png",
     },
     {
-      id: 1,
-      name: "Monalisa",
+      artworkID: 1,
+      title: "Monalisa",
       description: "test",
-      tag: ["A", "B"],
-      img: "image 1.png",
+      artTag: ["A", "B"],
+      url: "image 1.png",
     },
     {
-      id: 1,
-      name: "Monalisa",
+      artworkID: 1,
+      title: "Monalisa",
       description: "test",
-      tag: ["A", "B"],
-      img: "artwork2.jpg",
+      artTag: ["A", "B"],
+      url: "artwork2.jpg",
     },
     {
-      id: 1,
-      name: "Monalisa",
+      artworkID: 1,
+      title: "Monalisa",
       description: "test",
-      tag: ["A", "B"],
-      img: "image 1.png",
+      artTag: ["A", "B"],
+      url: "image 1.png",
     },
     {
-      id: 1,
-      name: "Monalisa",
+      artworkID: 1,
+      title: "Monalisa",
       description: "test",
-      tag: ["A", "B"],
-      img: "artwork2.jpg",
+      artTag: ["A", "B"],
+      url: "artwork2.jpg",
     },
   ];
 
-  const gallery = ["TEST"];
-
-  const [active, setActive] = useState(null);
-
   return (
     <Layout className="bg">
-      <Content
-        style={{ margin: "20vw", padding: 25, backgroundColor: "white" , fontFamily:'Asap'}}
-      >
-        <Row style={{ justifyContent: "space-between" }}>
-          <Col>
-            <img src="../profile.png" />
-          </Col>
-          <Col flex="1" style={{ paddingLeft: 25 }}>
-            <Row
-              style={{
-                display: "flex",
-                flex: 1,
-                fontSize: 20,
-                fontWeight: "bold",
-              }}
-            >
-              Chawin Gowanit
-            </Row>
-            <Row style={{ fontSize: 16 }}>@yongming.ym</Row>
-            <Row
-              style={{ display: "flex", alignItems: "center", fontSize: 14 }}
-            >
-              <Rate count={1} defaultValue={1} style={{ marginRight: 5 }} />{" "}
-              4.85
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Button
-                shape="round"
-                style={{
-                  color: "white",
-                  background: "#A44CD7",
-                  minWidth: 120,
-                  border: "none",
-                }}
-                onClick={onClickUpload}
-              >
-                Upload new artwork <UploadOutlined />
-              </Button>
-            </Row>
-          </Col>
-        </Row>
-
-        <Row style={{ paddingTop: 30 }}>
-          <Col>
-            <Row style={{ fontSize: 16, fontWeight: "bold", color: "gray" }}>
-              Biography
-            </Row>
-            <Row style={{ fontSize: 16, color: "gray" }}>Lorem</Row>
-          </Col>
-        </Row>
-
-        <Row>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="Home" key="1" style={{ padding: 20, paddingTop: 0 }}>
-              <Row style={{ marginTop: 5 }}>
-                <Col
-                  style={{ alignItems: "center", marginRight: 15, width: 150 }}
-                >
-                  <Row
-                    alignItems="center"
-                    style={{ fontSize: 20, fontWeight: "bold" }}
-                  >
-                    Review
-                  </Row>
-                </Col>
-                <Col>
-                  <Rate count={5} disabled defaultValue={5} />
-                </Col>
-              </Row>
-
-              <Row style={{ marginTop: 15 }}>
-                <Col
-                  style={{ alignItems: "center", marginRight: 15, width: 150 }}
-                >
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    Price Range
-                  </Text>
-                </Col>
-
-                <Col>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "#D74C7F",
-                      width: "25%",
-                    }}
-                  >
-                    {" "}
-                    $100 - $2000
-                  </Text>
-                </Col>
-              </Row>
-
-              <Row style={{ marginTop: 15 }}>
-                <Col style={{ fontSize: 20, fontWeight: "bold" }}>
-                  My Work
-                  <Carousel
-                    responsive={responsive}
-                    arrows={false}
-                    swipeable={true}
-                    partialVisibile={true}
-                  >
-                    {artwork.map((a) => {
-                      return (
-                        <div
-                          onClick={() => onclickPic(a)}
-                          style={{ marginRight: 10 }}
-                        >
-                          <img style={{ maxHeight: 167 }} src={a.img} />
-                        </div>
-                      );
-                    })}
-                  </Carousel>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: 15 }}>
-                <Col style={{ fontSize: 20, fontWeight: "bold" }}>
-                  My Gallery
-                  <Carousel
-                    responsive={responsive}
-                    arrows={false}
-                    swipeable={true}
-                    partialVisible={true}
-                  >
-                    <div style={{ background: "" }}>
-                      <img src="./image 1.png" />
-                    </div>
-
-                    <div>
-                      <img src="./Artwork.png" />
-                    </div>
-                    <div>
-                      <img height="167" src="./artwork2.jpg" />
-                    </div>
-                    <div>
-                      <img height="167" src="./artwork2.jpg" />
-                    </div>
-                  </Carousel>
-                </Col>
-              </Row>
-            </TabPane>
-
-            <TabPane tab="Artwork" key="2" disabled>
-              Artwork
-            </TabPane>
-
-            <TabPane tab="Gallery" key="3" disabled>
-              <Carousel responsive={responsive} arrows={false}>
-                <div>Item 1</div>
-                <div>Item 2</div>
-                <div>Item 3</div>
-                <div>Item 4</div>
-              </Carousel>
-            </TabPane>
-          </Tabs>
-        </Row>
-
-        <Modal
-          title="Upload Artwork"
-          visible={upload}
-          onOk={() => setUpload(false)}
-          footer={null}
-          onCancel={() => setUpload(false)}
+      {user && (
+        <Content
+          style={{
+            margin: "20vw",
+            padding: 25,
+            backgroundColor: "white",
+            fontFamily: "Asap",
+          }}
         >
-          Artwork Name
-          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadName} />
-          Artwork Description
-          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadDesc} />
-          Artwork Tag{" "}
-          <Row style={{ marginBottom: 20 }}>
-            {" "}
-            <Button
-              shape="circle"
-              icon={<PlusCircleOutlined />}
-              style={{ border: "none", height: 20 }}
-            />
-          </Row>
-          <Row style={{ alignItems: "center", width: "100%" }}>
-            <Upload
-              name="avatar"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              style={{ background: "green", alignSelf: "center" }}
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              //beforeUpload={beforeUpload}
-              //onChange={this.handleChange}
-            >
-              {/* {imageUrl ? (
-              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-            ) : (
-              uploadButton
-            )} */}
-              Upload artwork
-            </Upload>
-            <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
-              <Button
-                type="round"
+          <Row style={{ justifyContent: "space-between" }}>
+            <Col>
+              <img src="../profile.png" />
+            </Col>
+            <Col flex="1" style={{ paddingLeft: 25 }}>
+              <Row
                 style={{
-                  height: 32,
-                  color: "white",
-                  background: "#4CD75F",
-                  minWidth: 45,
-                  marginRight: 5,
-                  border: "none",
-                }}
-                onClick={() =>
-                  confirmUpload(uploadName, uploadDesc, uploadTag, uploadUrl)
-                }
-              >
-                Submit <EditOutlined />
-              </Button>
-            </Row>
-          </Row>
-        </Modal>
-
-        {active && (
-          <Modal
-            centered
-            title={active.name}
-            visible={active}
-            onOk={() => setActive(null)}
-            footer={null}
-            onCancel={() => setActive(null)}
-          >
-            <Row style={{ marginBottom: 20 }}>
-              <Col span={16}>
-                <img
-                  style={{ maxHeight: "100%", width: "100%" }}
-                  src={active.img}
-                />
-              </Col>
-              <Col
-                span={8}
-                style={{
-                  paddingLeft: 10,
                   display: "flex",
-                  alignItems: "center",
-                  color: "grey",
-                  fontSize: 16,
+                  flex: 1,
+                  fontSize: 20,
+                  fontWeight: "bold",
                 }}
               >
-                {" "}
-                {active.description}
-              </Col>
-            </Row>
-            <Row
-              style={{ fontSize: 12, fontWeight: "bold", alignItems: "center" }}
-            >
-              {" "}
-              <EyeOutlined style={{ marginRight: 5 }} /> Views: 9999
-            </Row>
-            <Row style={{ marginTop: 30, fontWeight: "bold", fontSize: 16 }}>
-              {" "}
-              Artwork Tag
-            </Row>
-            <Row style={{ marginBottom: 20 }}>
-              {active.tag.map((t) => {
-                return (
-                  <Button
-                    type="round"
-                    style={{
-                      marginRight: 2,
-                      height: 20,
-                      color: "white",
-                      background: "#4CD75F",
-                      minWidth: 45,
-                      fontSize: 9,
-                      border: "none",
-                    }}
-                  >
-                    {t}
-                  </Button>
-                );
-              })}
-            </Row>
-
-            <Row justify="end">
-              <Button
-                type="round"
-                style={{
-                  height: 32,
-                  color: "white",
-                  background: "#4CD75F",
-                  minWidth: 45,
-                  marginRight: 5,
-                  border: "none",
-                }}
-                onClick={() => setEdit(true)}
-              >
-                Edit <EditOutlined />
-              </Button>
-              <Button
-                type="round"
-                style={{
-                  height: 32,
-                  color: "white",
-                  background: "#D74C7F",
-                  minWidth: 45,
-                  border: "none",
-                }}
-                onClick={() => setShowConfirmDelete(true)}
-              >
-                Delete <DeleteOutlined />
-              </Button>
-            </Row>
-
-            <Modal
-              centered
-              onCancel={() => setShowConfirmDelete(false)}
-              visible={showConfirmDelete}
-              title="Delete Confirmation"
-              footer={null}
-            >
-              <Row style={{ fontSize: 16, fontWeight: "bold" }}>
-                Are you sure you want to delete this artwork?
+                {user.name} {user.surname}
               </Row>
-              <Row style={{ width: "100%", marginTop: 25 }}>
-                <Col span={12}>
-                  <Button
-                    type="round"
-                    style={{
-                      width: "95%",
-                      color: "white",
-                      background: "#4CD75F",
-                      border: "none",
-                    }}
-                    onClick={() => setShowConfirmDelete(false)}
-                  >
-                    Cancel <CloseCircleOutlined />
-                  </Button>
-                </Col>
-                <Col span={12}>
-                  <Button
-                    type="round"
-                    style={{
-                      color: "white",
-                      background: "#D74C7F",
-                      width: "95%",
-                      border: "none",
-                    }}
-                    onClick={() => confirmDelete(active.id)}
-                  >
-                    Delete <DeleteOutlined />
-                  </Button>
-                </Col>
+              <Row style={{ fontSize: 16 }}>@{user.username}</Row>
+              <Row
+                style={{ display: "flex", alignItems: "center", fontSize: 14 }}
+              >
+                <Rate count={1} defaultValue={1} style={{ marginRight: 5 }} />{" "}
+                {user.rating}
               </Row>
-            </Modal>
-          </Modal>
-        )}
-        {active && (
+            </Col>
+            <Col>
+              <Row>
+                <Button
+                  shape="round"
+                  style={{
+                    color: "white",
+                    background: "#A44CD7",
+                    minWidth: 120,
+                    border: "none",
+                  }}
+                  onClick={onClickUpload}
+                >
+                  Upload new artwork <UploadOutlined />
+                </Button>
+              </Row>
+            </Col>
+          </Row>
+
+          <Row style={{ paddingTop: 30 }}>
+            <Col>
+              <Row style={{ fontSize: 16, fontWeight: "bold", color: "gray" }}>
+                Biography
+              </Row>
+              <Row style={{ fontSize: 16, color: "gray" }}>
+                {user.Biography}
+              </Row>
+            </Col>
+          </Row>
+
+          <Row>
+            <Tabs defaultActiveKey="1">
+              <TabPane
+                tab="Home"
+                key="1"
+                style={{ padding: 20, paddingTop: 0 }}
+              >
+                <Row style={{ marginTop: 5 }}>
+                  <Col
+                    style={{
+                      alignItems: "center",
+                      marginRight: 15,
+                      width: 150,
+                    }}
+                  >
+                    <Row
+                      alignItems="center"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    >
+                      Review
+                    </Row>
+                  </Col>
+                  <Col>
+                    <Rate count={5} disabled defaultValue={5} />
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: 15 }}>
+                  <Col
+                    style={{
+                      alignItems: "center",
+                      marginRight: 15,
+                      width: 150,
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                      Price Range
+                    </Text>
+                  </Col>
+
+                  <Col>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "#D74C7F",
+                        width: "25%",
+                      }}
+                    >
+                      {" "}
+                      $100 - $2000
+                    </Text>
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: 15 }}>
+                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
+                    My Work
+                    <Carousel
+                      responsive={responsive}
+                      arrows={false}
+                      swipeable={true}
+                      partialVisibile={true}
+                    >
+                      {mockartwork.map((a) => {
+                        return (
+                          <div
+                            onClick={() => onclickPic(a)}
+                            style={{ marginRight: 10 }}
+                          >
+                            <img style={{ maxHeight: 167 }} src={a.url} />
+                          </div>
+                        );
+                      })}
+                    </Carousel>
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: 15 }}>
+                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
+                    My Gallery
+                    <Carousel
+                      responsive={responsive}
+                      arrows={false}
+                      swipeable={true}
+                      partialVisible={true}
+                    >
+                      <div style={{ background: "" }}>
+                        <img src="./image 1.png" />
+                      </div>
+
+                      <div>
+                        <img src="./Artwork.png" />
+                      </div>
+                      <div>
+                        <img height="167" src="./artwork2.jpg" />
+                      </div>
+                      <div>
+                        <img height="167" src="./artwork2.jpg" />
+                      </div>
+                    </Carousel>
+                  </Col>
+                </Row>
+              </TabPane>
+
+              <TabPane tab="Artwork" key="2" disabled>
+                Artwork
+              </TabPane>
+
+              <TabPane tab="Gallery" key="3" disabled>
+                <Carousel responsive={responsive} arrows={false}>
+                  <div>Item 1</div>
+                  <div>Item 2</div>
+                  <div>Item 3</div>
+                  <div>Item 4</div>
+                </Carousel>
+              </TabPane>
+            </Tabs>
+          </Row>
+
           <Modal
-            title="Edit Artwork"
-            visible={edit}
-            onOk={() => setEdit(false)}
+            title="Upload Artwork"
+            visible={upload}
+            onOk={() => setUpload(false)}
             footer={null}
-            onCancel={() => setEdit(false)}
+            onCancel={() => setUpload(false)}
           >
             Artwork Name
-            <Input
-              style={{ marginBottom: 5 }}
-              placeholder={active.name}
-              onChange={onChangeEditName}
-            />
+            <Input style={{ marginBottom: 5 }} onChange={onChangeUploadName} />
             Artwork Description
-            <Input
-              style={{ marginBottom: 5 }}
-              placeholder={active.description}
-              onChange={onChangeEditDesc}
-            />
-            Artwork Tag
-            <Row style={{ marginBottom: 10 }}>
-              {active.tag.map((t) => {
-                return (
-                  <div
-                    style={{
-                      marginRight: 2,
-                      height: 20,
-                      color: "white",
-                      background: "#4CD75F",
-                      minWidth: 45,
-                      fontSize: 9,
-                      textAlign: "center",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      border: "none",
-                      display: "flex",
-                      borderRadius: 100000,
-                    }}
-                  >
-                    <Row justify="space-between" style={{width:'55%'}}>
-                      <Col> {t} </Col>
-                      <Col>
-                        X
-                      </Col>
-                    </Row>
-                  </div>
-                  // <Button
-                  //   type="round"
-                  //   style={{
-                  //     marginRight: 2,
-                  //     height: 20,
-                  //     color: "white",
-                  //     background: "#4CD75F",
-                  //     minWidth: 45,
-                  //     fontSize: 9,
-                  //     border: "none",
-                  //   }}
-                  // >
-                  //   {t}
-                  // </Button>
-                );
-              })}
+            <Input style={{ marginBottom: 5 }} onChange={onChangeUploadDesc} />
+            Artwork Tag{" "}
+            <Row style={{ marginBottom: 20 }}>
+              {" "}
               <Button
                 shape="circle"
                 icon={<PlusCircleOutlined />}
                 style={{ border: "none", height: 20 }}
               />
             </Row>
-            <Row
-              style={{
-                alignItems: "center",
-                width: "100%",
-                marginTop: 30,
-                marginBottom: 40,
-              }}
-            >
-              <img style={{ width: "100%" }} src={active.img} />
-            </Row>
-            <Row justify="end">
-              <Button
-                type="round"
-                style={{
-                  color: "white",
-                  background: "#4CD75F",
-                  border: "none",
-                }}
-                onClick={() =>
-                  confirmEdit(active.id, editName, editDesc, editTag, editUrl)
-                }
+            <Row style={{ alignItems: "center", width: "100%" }}>
+              <Upload
+                name="avatar"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                style={{ background: "green", alignSelf: "center" }}
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                //beforeUpload={beforeUpload}
+                //onChange={this.handleChange}
               >
-                Submit
-              </Button>
+                {/* {imageUrl ? (
+              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )} */}
+                Upload artwork
+              </Upload>
+              <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
+                <Button
+                  type="round"
+                  style={{
+                    height: 32,
+                    color: "white",
+                    background: "#4CD75F",
+                    minWidth: 45,
+                    marginRight: 5,
+                    border: "none",
+                  }}
+                  onClick={() =>
+                    confirmUpload(uploadName, uploadDesc, uploadTag, uploadUrl)
+                  }
+                >
+                  Submit <EditOutlined />
+                </Button>
+              </Row>
             </Row>
           </Modal>
-        )}
-      </Content>
+
+          {active && (
+            <Modal
+              centered
+              title={active.title}
+              visible={active}
+              onOk={() => setActive(null)}
+              footer={null}
+              onCancel={() => setActive(null)}
+            >
+              <Row style={{ marginBottom: 20 }}>
+                <Col span={16}>
+                  <img
+                    style={{ maxHeight: "100%", width: "100%" }}
+                    src={active.url}
+                  />
+                </Col>
+                <Col
+                  span={8}
+                  style={{
+                    paddingLeft: 10,
+                    display: "flex",
+                    alignItems: "center",
+                    color: "grey",
+                    fontSize: 16,
+                  }}
+                >
+                  {" "}
+                  {active.description}
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  fontSize: 12,
+                  fontWeight: "bold",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                <EyeOutlined style={{ marginRight: 5 }} /> Views: 9999
+              </Row>
+              <Row style={{ marginTop: 30, fontWeight: "bold", fontSize: 16 }}>
+                {" "}
+                Artwork Tag
+              </Row>
+              <Row style={{ marginBottom: 20 }}>
+                {active.artTag.map((t) => {
+                  return (
+                    <Button
+                      type="round"
+                      style={{
+                        marginRight: 2,
+                        height: 20,
+                        color: "white",
+                        background: "#4CD75F",
+                        minWidth: 45,
+                        fontSize: 9,
+                        border: "none",
+                      }}
+                    >
+                      {t}
+                    </Button>
+                  );
+                })}
+              </Row>
+
+              <Row justify="end">
+                <Button
+                  type="round"
+                  style={{
+                    height: 32,
+                    color: "white",
+                    background: "#4CD75F",
+                    minWidth: 45,
+                    marginRight: 5,
+                    border: "none",
+                  }}
+                  onClick={() => {
+                    setEdit(true);
+                    setEditTag(active.artTag);
+                  }}
+                >
+                  Edit <EditOutlined />
+                </Button>
+                <Button
+                  type="round"
+                  style={{
+                    height: 32,
+                    color: "white",
+                    background: "#D74C7F",
+                    minWidth: 45,
+                    border: "none",
+                  }}
+                  onClick={() => setShowConfirmDelete(true)}
+                >
+                  Delete <DeleteOutlined />
+                </Button>
+              </Row>
+
+              <Modal
+                centered
+                onCancel={() => setShowConfirmDelete(false)}
+                visible={showConfirmDelete}
+                title="Delete Confirmation"
+                footer={null}
+              >
+                <Row style={{ fontSize: 16, fontWeight: "bold" }}>
+                  Are you sure you want to delete this artwork?
+                </Row>
+                <Row style={{ width: "100%", marginTop: 25 }}>
+                  <Col span={12}>
+                    <Button
+                      type="round"
+                      style={{
+                        width: "95%",
+                        color: "white",
+                        background: "#4CD75F",
+                        border: "none",
+                      }}
+                      onClick={() => setShowConfirmDelete(false)}
+                    >
+                      Cancel <CloseCircleOutlined />
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      type="round"
+                      style={{
+                        color: "white",
+                        background: "#D74C7F",
+                        width: "95%",
+                        border: "none",
+                      }}
+                      onClick={() => confirmDelete(active.artworkID)}
+                    >
+                      Delete <DeleteOutlined />
+                    </Button>
+                  </Col>
+                </Row>
+              </Modal>
+            </Modal>
+          )}
+          {active && (
+            <Modal
+              title="Edit Artwork"
+              visible={edit}
+              onOk={() => setEdit(false)}
+              footer={null}
+              onCancel={() => setEdit(false)}
+            >
+              Artwork Name
+              <Input
+                style={{ marginBottom: 5 }}
+                placeholder={active.title}
+                onChange={onChangeEditName}
+              />
+              Artwork Description
+              <Input
+                style={{ marginBottom: 5 }}
+                placeholder={active.description}
+                onChange={onChangeEditDesc}
+              />
+              Artwork Tag
+              <Row style={{ marginBottom: 10 }}>
+                {active.artTag.map((t) => {
+                  return (
+                    <div
+                      style={{
+                        marginRight: 2,
+                        height: 20,
+                        color: "white",
+                        background: "#4CD75F",
+                        minWidth: 45,
+                        fontSize: 9,
+                        textAlign: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "none",
+                        display: "flex",
+                        borderRadius: 100000,
+                      }}
+                    >
+                      <Row justify="space-between" style={{ width: "55%" }}>
+                        <Col> {t} </Col>
+                        <Col>X</Col>
+                      </Row>
+                    </div>
+                    // <Button
+                    //   type="round"
+                    //   style={{
+                    //     marginRight: 2,
+                    //     height: 20,
+                    //     color: "white",
+                    //     background: "#4CD75F",
+                    //     minWidth: 45,
+                    //     fontSize: 9,
+                    //     border: "none",
+                    //   }}
+                    // >
+                    //   {t}
+                    // </Button>
+                  );
+                })}
+                <Button
+                  shape="circle"
+                  icon={<PlusCircleOutlined />}
+                  style={{ border: "none", height: 20 }}
+                />
+              </Row>
+              <Row
+                style={{
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: 30,
+                  marginBottom: 40,
+                }}
+              >
+                <img style={{ width: "100%" }} src={active.url} />
+              </Row>
+              <Row justify="end">
+                <Button
+                  type="round"
+                  style={{
+                    color: "white",
+                    background: "#4CD75F",
+                    border: "none",
+                  }}
+                  onClick={() =>
+                    confirmEdit(
+                      active.artworkID,
+                      editName,
+                      editDesc,
+                      editTag,
+                      editUrl
+                    )
+                  }
+                >
+                  Submit
+                </Button>
+              </Row>
+            </Modal>
+          )}
+        </Content>
+      )}
     </Layout>
   );
 };
