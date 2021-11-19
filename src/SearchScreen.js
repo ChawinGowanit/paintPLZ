@@ -136,9 +136,9 @@ function SearchScreen() {
 
           </div>
           <div className = 'area-gap'>
-          <input value = 'show'type="button" onClick = {()=> setResult('aa')}/>
+          {/* <input value = 'show'type="button" onClick = {()=> setResult('aa')}/>
           <input value = 'unshow' type="button" onClick = {()=> setResult('a')}/>
-
+ */}
 
           </div>
           <div className = 'area'>
