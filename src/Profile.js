@@ -38,12 +38,19 @@ const Profile = () => {
   const [editTag, setEditTag] = useState(null);
   const [editUrl, setEditUrl] = useState(null);
   const [uploadName, setUploadName] = useState(null);
+  //const [tags, setTags] = useState(null);
+  const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
-  const [uploadTag, setUploadTag] = useState(null);
+  const [uploadTag, setUploadTag] = useState([]);
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
   //const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getProfile();
+    getApiOfTag();
+  }, []);
 
   const user = {
     userID: "00000005",
@@ -54,6 +61,65 @@ const Profile = () => {
     minimunPriceRate: 1000,
     maximumPriceRate: 2000,
     Biography: "I’m the fastest man alive.",
+  };
+
+  function removeFromEditTag(text) {
+    var newTag = editTag.filter((item) => {
+      return item !== text;
+    });
+    setEditTag(newTag);
+  }
+
+  function removeFromUploadTag(text) {
+    var newTag = uploadTag.filter((item) => {
+      return item !== text;
+    });
+    setUploadTag(newTag);
+  }
+
+  function addTag(x, t) {
+    if (x.indexOf(t) === -1) {
+      x.push(t);
+    }
+    setSearchedTags([]);
+  }
+
+  const tags = [
+    "exile",
+    "water",
+    "fountain",
+    "millen",
+    "idk",
+    "yarknorn",
+    "hbd",
+    "ily",
+    "nammmm",
+  ];
+
+  function getApiOfTag() {
+    //hashIt(password);
+    axios({ method: "GET", url: "http://localhost:8000/api/paintplz/v1/tags" })
+      .then(function (response) {
+        console.log(response);
+        //   setTags(response.data.tags);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSearch = (event) => {
+    let value = event.target.value.toLowerCase();
+    if (value === "") {
+      setSearchedTags([]);
+    } else {
+      let result = [];
+      console.log(value);
+      result = tags.filter((data) => {
+        return data.search(value) != -1;
+      });
+      setSearchedTags(result);
+    }
   };
 
   const getProfile = async () => {
@@ -98,9 +164,14 @@ const Profile = () => {
 
   const onclickPic = (props) => {
     setActive(props);
+    setEditTag(props.artTag);
   };
 
   const confirmUpload = async (name, desc, tag, url) => {
+    setUploadDesc(null);
+    setUploadName(null);
+    setUploadTag([]);
+    setUpload(false);
     try {
       const res = await axios(
         "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
@@ -117,6 +188,10 @@ const Profile = () => {
           },
         }
       );
+      // setUploadDesc(null);
+      // setUploadName(null);
+      // setUploadTag(null);
+      // setUpload(false);
     } catch (err) {
       throw err;
     }
@@ -404,20 +479,52 @@ const Profile = () => {
             visible={upload}
             onOk={() => setUpload(false)}
             footer={null}
-            onCancel={() => setUpload(false)}
+            onCancel={() => {
+              setUpload(false);
+              setUploadDesc(null);
+              setUploadTag([]);
+              setUploadName(null);
+            }}
           >
             Artwork Name
             <Input style={{ marginBottom: 5 }} onChange={onChangeUploadName} />
             Artwork Description
             <Input style={{ marginBottom: 5 }} onChange={onChangeUploadDesc} />
             Artwork Tag{" "}
+            <Input
+              style={{ marginBottom: 5 }}
+              onChange={handleSearch}
+              placeholder="Search tags"
+            />
+            {searchedTags.map((t) => {
+              return <div onClick={() => addTag(uploadTag, t)}>{t}</div>;
+            })}
             <Row style={{ marginBottom: 20 }}>
-              {" "}
-              <Button
-                shape="circle"
-                icon={<PlusCircleOutlined />}
-                style={{ border: "none", height: 20 }}
-              />
+              {uploadTag.map((t) => {
+                return (
+                  <div
+                    style={{
+                      marginRight: 2,
+                      height: 20,
+                      color: "white",
+                      background: "#4CD75F",
+                      minWidth: 70,
+                      fontSize: 9,
+                      textAlign: "center",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "none",
+                      display: "flex",
+                      borderRadius: 100000,
+                    }}
+                  >
+                    <Row justify="space-between" style={{ width: "55%" }}>
+                      <Col> {t} </Col>
+                      <Col onClick={() => removeFromUploadTag(t)}>X</Col>
+                    </Row>
+                  </div>
+                );
+              })}
             </Row>
             <Row style={{ alignItems: "center", width: "100%" }}>
               <Upload
@@ -535,8 +642,8 @@ const Profile = () => {
                     border: "none",
                   }}
                   onClick={() => {
+                    console.log("active.artTag");
                     setEdit(true);
-                    setEditTag(active.artTag);
                   }}
                 >
                   Edit <EditOutlined />
@@ -619,9 +726,17 @@ const Profile = () => {
                 placeholder={active.description}
                 onChange={onChangeEditDesc}
               />
-              Artwork Tag
+              Artwork Tag{" "}
+              <Input
+                style={{ marginBottom: 5 }}
+                onChange={handleSearch}
+                placeholder="Search tags"
+              />
+              {searchedTags.map((t) => {
+                return <div onClick={() => addTag(editTag, t)}>{t}</div>;
+              })}
               <Row style={{ marginBottom: 10 }}>
-                {active.artTag.map((t) => {
+                {editTag.map((t) => {
                   return (
                     <div
                       style={{
@@ -629,7 +744,8 @@ const Profile = () => {
                         height: 20,
                         color: "white",
                         background: "#4CD75F",
-                        minWidth: 45,
+                        width: "fit-content",
+                        minWidth: 70,
                         fontSize: 9,
                         textAlign: "center",
                         justifyContent: "center",
@@ -641,30 +757,11 @@ const Profile = () => {
                     >
                       <Row justify="space-between" style={{ width: "55%" }}>
                         <Col> {t} </Col>
-                        <Col>X</Col>
+                        <Col onClick={() => removeFromEditTag(t)}>X</Col>
                       </Row>
                     </div>
-                    // <Button
-                    //   type="round"
-                    //   style={{
-                    //     marginRight: 2,
-                    //     height: 20,
-                    //     color: "white",
-                    //     background: "#4CD75F",
-                    //     minWidth: 45,
-                    //     fontSize: 9,
-                    //     border: "none",
-                    //   }}
-                    // >
-                    //   {t}
-                    // </Button>
                   );
                 })}
-                <Button
-                  shape="circle"
-                  icon={<PlusCircleOutlined />}
-                  style={{ border: "none", height: 20 }}
-                />
               </Row>
               <Row
                 style={{
