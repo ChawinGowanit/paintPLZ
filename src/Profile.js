@@ -35,6 +35,8 @@ const Profile = () => {
   const [edit, setEdit] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showConfirmEdit, setShowConfirmEdit] = useState(false);
+  const [showCompleteDelete, setShowCompleteDelete] = useState(false);
+  const [showCompleteEdit, setShowCompleteEdit] = useState(false);
   const [editName, setEditName] = useState(null);
   const [editDesc, setEditDesc] = useState(null);
   const [editTag, setEditTag] = useState(null);
@@ -174,6 +176,7 @@ const Profile = () => {
     setUploadName(null);
     setUploadTag([]);
     setUpload(false);
+
     try {
       const res = await axios(
         "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
@@ -194,12 +197,14 @@ const Profile = () => {
       // setUploadName(null);
       // setUploadTag(null);
       // setUpload(false);
+      getProfile();
     } catch (err) {
       throw err;
     }
   };
 
   const confirmEdit = async (id, name, desc, tag, url) => {
+    setShowCompleteEdit(true);
     try {
       const res = await axios(
         "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/edit",
@@ -217,12 +222,16 @@ const Profile = () => {
           },
         }
       );
+
+      setShowCompleteEdit(true);
+      getProfile();
     } catch (err) {
       throw err;
     }
   };
 
   const confirmDelete = async (id) => {
+    setShowCompleteDelete(true);
     try {
       const res = await axios(
         "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/delete",
@@ -234,7 +243,7 @@ const Profile = () => {
         }
       );
       setShowConfirmDelete(false);
-      setActive(null);
+      getProfile();
     } catch (err) {
       throw err;
     }
@@ -672,7 +681,9 @@ const Profile = () => {
                 title="Delete Confirmation"
                 footer={null}
               >
-                <Row style={{ fontSize: 16, fontWeight: "bold",marginBottom:10 }}>
+                <Row
+                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+                >
                   Are you sure you want to delete this artwork?
                 </Row>
                 <Row>
@@ -705,6 +716,41 @@ const Profile = () => {
                       onClick={() => confirmDelete(active.artworkID)}
                     >
                       Delete <DeleteOutlined />
+                    </Button>
+                  </Col>
+                </Row>
+              </Modal>
+
+              <Modal
+                centered
+                onCancel={() => setShowCompleteDelete(false)}
+                visible={showCompleteDelete}
+                title="Delete Completed"
+                footer={null}
+              >
+                <Row
+                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+                >
+                  Artwork has been deleted.
+                </Row>
+
+                <Row style={{ width: "100%", marginTop: 25 }}>
+                  <Col span={24}>
+                    <Button
+                      type="round"
+                      style={{
+                        width: "95%",
+                        color: "white",
+                        background: "#4CD75F",
+                        border: "none",
+                      }}
+                      onClick={() => {
+                        setShowCompleteDelete(false);
+                        setShowConfirmDelete(false);
+                        setActive(null);
+                      }}
+                    >
+                      Close
                     </Button>
                   </Col>
                 </Row>
@@ -846,6 +892,40 @@ const Profile = () => {
                       }
                     >
                       Save <EditOutlined />
+                    </Button>
+                  </Col>
+                </Row>
+              </Modal>
+              <Modal
+                centered
+                onCancel={() => setShowCompleteEdit(false)}
+                visible={showCompleteEdit}
+                title="Edit Completed"
+                footer={null}
+              >
+                <Row
+                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+                >
+                  Artwork has been edited.
+                </Row>
+
+                <Row style={{ width: "100%", marginTop: 25 }}>
+                  <Col span={24}>
+                    <Button
+                      type="round"
+                      style={{
+                        width: "95%",
+                        color: "white",
+                        background: "#4CD75F",
+                        border: "none",
+                      }}
+                      onClick={() => {
+                        setShowCompleteEdit(false);
+                        setShowConfirmEdit(false);
+                        setActive(null);
+                      }}
+                    >
+                      Close
                     </Button>
                   </Col>
                 </Row>
