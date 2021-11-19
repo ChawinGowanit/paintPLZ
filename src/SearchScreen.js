@@ -45,6 +45,7 @@ function SearchScreen() {
   
   return (
     <>
+    <div style={{display:'flex',justifyContent:"center"}}>
     <div id = 'container'>
       <div id = 'search-pane'>
           
@@ -185,10 +186,12 @@ function SearchScreen() {
       </div>
      
     </div>
+    </div>
 
 
-          
+    <div style={{display:'flex',justifyContent:"center"}}>
     {result.includes('a')  ? 
+    
     <div id = 'result-pane'>
       <div id = 'header'>
           <text style = {{alignSelf : 'center'}}>Result</text>
@@ -215,8 +218,10 @@ function SearchScreen() {
     
     
     : null}
+    </div>
       
     </>
+    
     
   );
 }

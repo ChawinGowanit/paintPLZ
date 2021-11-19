@@ -1,8 +1,9 @@
 @import '~antd/dist/antd.css';
 
+
 .bg {
-    background-image: url('./bg-image.png');
-    background-size: cover;
+    background-image: url('./bg1.png') !important;
+    background-size: cover !important;
 }
 
 .ant-upload {
