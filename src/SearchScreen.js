@@ -44,8 +44,8 @@ function SearchScreen() {
   
   
   return (
-    <>
-    <div style={{display:'flex',justifyContent:"center"}}>
+    <div className = 'bg'>
+    <div  style={{display:'flex',justifyContent:"center"}}>
     <div id = 'container'>
       <div id = 'search-pane'>
           
@@ -220,7 +220,7 @@ function SearchScreen() {
     : null}
     </div>
       
-    </>
+    </div>
     
     
   );

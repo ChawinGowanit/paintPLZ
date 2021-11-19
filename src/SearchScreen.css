@@ -1,8 +1,10 @@
-body { 
-    background-image: url('bg1.png') !important;
+/* body { 
+    background-image: url('bg.png') !important;
+} */
+.bg {
+    background-image: url('./bg1.png') !important;
+    background-size: cover !important;
 }
-
-
 #container {
     /* margin-top : 15.7vh ;  */
     margin-top: 161px;
