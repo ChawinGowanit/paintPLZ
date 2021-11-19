@@ -7,7 +7,7 @@ import {
   Button,
   Rate,
   Modal,
-  Upload
+  Upload,
 } from "antd";
 import { Row, Col, Tabs } from "antd";
 import Carousel from "react-multi-carousel";
@@ -20,7 +20,7 @@ import {
   EyeOutlined,
   CloseCircleOutlined,
   PlusCircleOutlined,
-  UploadOutlined
+  UploadOutlined,
 } from "@ant-design/icons";
 
 const { TabPane } = Tabs;
@@ -69,63 +69,84 @@ const Profile = () => {
     setActive(props);
   };
 
-  const confirmUpload =  async (name,desc,tag,url) => {
+  const confirmUpload = async (name, desc, tag, url) => {
     try {
-      const res = await axios("http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-        data: { username : 'ym', artworkName : name, artworkDescription : desc,artTag : tag, artworkUrl : url},
-      });
+      const res = await axios(
+        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          data: {
+            username: "ym",
+            artworkName: name,
+            artworkDescription: desc,
+            artTag: tag,
+            artworkUrl: "www.bibibibi.com",
+          },
+        }
+      );
     } catch (err) {
       throw err;
     }
-  }
+  };
 
-  const confirmEdit =  async (id,name,desc,tag,url) => {
+  const confirmEdit = async (id, name, desc, tag, url) => {
     try {
-      const res = await axios("http://localhost:8000/api/paintplz/v1/artist_profile/artwork/edit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-        data: { username : 'ym',artworkID : id , artworkName : name, artworkDescription : desc,artTag : tag, artworkUrl : url},
-      });
+      const res = await axios(
+        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/edit",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          data: {
+            username: "ym",
+            artworkID: id,
+            artworkName: name,
+            artworkDescription: desc,
+            artTag: tag,
+            artworkUrl: "www.maiwailaew.com",
+          },
+        }
+      );
     } catch (err) {
       throw err;
     }
-  }
+  };
 
-
-  const confirmDelete =  async (id) => {
+  const confirmDelete = async (id) => {
     try {
-      const res = await axios("http://localhost:8000/api/paintplz/v1/artist_profile/artwork/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-        data: { username : 'ym',artworkID : id },
-      });
+      const res = await axios(
+        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/delete",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          data: { username: "ym", artworkID: id },
+        }
+      );
       setShowConfirmDelete(false);
       setActive(null);
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   const onChangeEditDesc = (e) => {
     setEditDesc(e.target.value);
-  }
+  };
 
   const onChangeEditName = (e) => {
     setEditName(e.target.value);
-  }
+  };
 
   const onChangeUploadDesc = (e) => {
     setUploadDesc(e.target.value);
-  }
+  };
 
   const onChangeUploadName = (e) => {
     setUploadName(e.target.value);
-  }
+  };
 
   const artwork = [
     {
@@ -172,7 +193,7 @@ const Profile = () => {
   return (
     <Layout className="bg">
       <Content
-        style={{ margin: "20vw", padding: 25, backgroundColor: "white" }}
+        style={{ margin: "20vw", padding: 25, backgroundColor: "white" , fontFamily:'Asap'}}
       >
         <Row style={{ justifyContent: "space-between" }}>
           <Col>
@@ -211,7 +232,6 @@ const Profile = () => {
               >
                 Upload new artwork <UploadOutlined />
               </Button>
-     
             </Row>
           </Col>
         </Row>
@@ -300,16 +320,18 @@ const Profile = () => {
                     partialVisible={true}
                   >
                     <div style={{ background: "" }}>
-                      <img src="../image 1.png" />
+                      <img src="./image 1.png" />
                     </div>
 
                     <div>
-                      <img src="../Artwork.png" />
+                      <img src="./Artwork.png" />
                     </div>
                     <div>
-                      <img height="167" src="../artwork2.jpg" />
+                      <img height="167" src="./artwork2.jpg" />
                     </div>
-                    <div>Item 4</div>
+                    <div>
+                      <img height="167" src="./artwork2.jpg" />
+                    </div>
                   </Carousel>
                 </Col>
               </Row>
@@ -338,10 +360,18 @@ const Profile = () => {
           onCancel={() => setUpload(false)}
         >
           Artwork Name
-          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadName}/>
+          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadName} />
           Artwork Description
-          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadDesc}/>
-          Artwork Tag <Row style={{ marginBottom: 20 }}> <Button shape="circle" icon={<PlusCircleOutlined />} style={{border:'none',height:20}} /></Row>
+          <Input style={{ marginBottom: 5 }} onChange={onChangeUploadDesc} />
+          Artwork Tag{" "}
+          <Row style={{ marginBottom: 20 }}>
+            {" "}
+            <Button
+              shape="circle"
+              icon={<PlusCircleOutlined />}
+              style={{ border: "none", height: 20 }}
+            />
+          </Row>
           <Row style={{ alignItems: "center", width: "100%" }}>
             <Upload
               name="avatar"
@@ -360,8 +390,8 @@ const Profile = () => {
             )} */}
               Upload artwork
             </Upload>
-            <Row justify="end" style={{width:"100%", marginTop:10}}>
-            <Button
+            <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
+              <Button
                 type="round"
                 style={{
                   height: 32,
@@ -371,11 +401,13 @@ const Profile = () => {
                   marginRight: 5,
                   border: "none",
                 }}
-                onClick={() => confirmUpload(uploadName,uploadDesc,uploadTag,uploadUrl)}
+                onClick={() =>
+                  confirmUpload(uploadName, uploadDesc, uploadTag, uploadUrl)
+                }
               >
                 Submit <EditOutlined />
               </Button>
-              </Row>
+            </Row>
           </Row>
         </Modal>
 
@@ -504,7 +536,7 @@ const Profile = () => {
                       width: "95%",
                       border: "none",
                     }}
-                    onClick={()=>confirmDelete(active.id)}
+                    onClick={() => confirmDelete(active.id)}
                   >
                     Delete <DeleteOutlined />
                   </Button>
@@ -522,19 +554,22 @@ const Profile = () => {
             onCancel={() => setEdit(false)}
           >
             Artwork Name
-            <Input style={{ marginBottom: 5 }} placeholder={active.name} onChange={onChangeEditName} />
+            <Input
+              style={{ marginBottom: 5 }}
+              placeholder={active.name}
+              onChange={onChangeEditName}
+            />
             Artwork Description
             <Input
               style={{ marginBottom: 5 }}
               placeholder={active.description}
-              onChange={onChangeEditDesc} 
+              onChange={onChangeEditDesc}
             />
             Artwork Tag
             <Row style={{ marginBottom: 10 }}>
               {active.tag.map((t) => {
                 return (
-                  <Button
-                    type="round"
+                  <div
                     style={{
                       marginRight: 2,
                       height: 20,
@@ -542,14 +577,42 @@ const Profile = () => {
                       background: "#4CD75F",
                       minWidth: 45,
                       fontSize: 9,
+                      textAlign: "center",
+                      justifyContent: "center",
+                      alignItems: "center",
                       border: "none",
+                      display: "flex",
+                      borderRadius: 100000,
                     }}
                   >
-                    {t}
-                  </Button>
+                    <Row justify="space-between" style={{width:'55%'}}>
+                      <Col> {t} </Col>
+                      <Col>
+                        X
+                      </Col>
+                    </Row>
+                  </div>
+                  // <Button
+                  //   type="round"
+                  //   style={{
+                  //     marginRight: 2,
+                  //     height: 20,
+                  //     color: "white",
+                  //     background: "#4CD75F",
+                  //     minWidth: 45,
+                  //     fontSize: 9,
+                  //     border: "none",
+                  //   }}
+                  // >
+                  //   {t}
+                  // </Button>
                 );
               })}
-              <Button shape="circle" icon={<PlusCircleOutlined />} style={{border:'none',height:20}} />
+              <Button
+                shape="circle"
+                icon={<PlusCircleOutlined />}
+                style={{ border: "none", height: 20 }}
+              />
             </Row>
             <Row
               style={{
@@ -569,9 +632,10 @@ const Profile = () => {
                   background: "#4CD75F",
                   border: "none",
                 }}
-                onClick={()=>confirmEdit(active.id,editName,editDesc,editTag,editUrl)}
+                onClick={() =>
+                  confirmEdit(active.id, editName, editDesc, editTag, editUrl)
+                }
               >
-
                 Submit
               </Button>
             </Row>
