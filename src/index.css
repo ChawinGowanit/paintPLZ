@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+    font-family: 'Asap';
+    src: local('Asap'), url(./fonts/Asap/Asap-Regular.ttf) format('truetype');
+  }

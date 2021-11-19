@@ -1,0 +1,46 @@
+.container{
+    min-width: 82px;
+    height : 20px ; 
+    background-color: #4CD75F;
+    
+    margin-bottom: 8px;
+    border-radius: 8px;
+    text-align: center;
+    color : white; 
+    font-family: Asap;
+    font-size: 12px;
+    font-weight: 400;
+    border: none;
+    
+}
+
+.circle {
+    
+    background-color: red;
+    width: 10px;
+    height : 10px;
+    border-radius: 5px;
+    justify-content: center;
+    display: flex;
+    align-content: flex-end;
+    text-align: center;
+    flex-direction: row;
+    margin-left: -5px;
+    
+    
+    
+}
+
+.circle :hover{
+    cursor: pointer;
+}
+
+.outer{
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    align-content: flex-start;
+    
+    
+
+}

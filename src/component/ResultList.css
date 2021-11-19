@@ -1,0 +1,61 @@
+.indivInfo {
+    width: 591px;
+    height :96px ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+   
+
+}
+
+.circle {
+    width : 64px ; 
+    height : 64px;
+    
+        
+    
+}
+
+.frame {
+    margin-left: 16px;
+}
+
+.half-sec {
+    width : 50% ; 
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.half-sec-end{
+    justify-content: flex-end;
+    
+}
+
+.nameandrating {
+    margin-left: 16px;
+    
+    width: 199.5px;
+    display: flex; 
+    flex-direction: column;
+    font-size: 16px;
+    font-family: Asap;
+    line-height: 18.34px;
+    
+}
+
+.button {
+    width : 110px;
+    height : 32px;
+    background-color: #A44CD7;
+    border-radius: 10000px;
+    border: none;
+    color: white;
+}
+
+.button-end {
+    margin-right: 16px;
+    margin-left : 4px ; 
+}
