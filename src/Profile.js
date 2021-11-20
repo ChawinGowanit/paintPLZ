@@ -102,7 +102,7 @@ const Profile = () => {
 
   function getApiOfTag() {
     //hashIt(password);
-    axios({ method: "GET", url: "http://localhost:8000/api/paintplz/v1/tags" })
+    axios({ method: "GET", url: "http://localhost:1323/api/paintplz/v1/tags" })
       .then(function (response) {
         console.log(response);
         //   setTags(response.data.tags);
@@ -129,7 +129,7 @@ const Profile = () => {
   const getProfile = async () => {
     try {
       const res = await axios(
-        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/kirkpig",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -179,7 +179,7 @@ const Profile = () => {
 
     try {
       const res = await axios(
-        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/upload",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -207,7 +207,7 @@ const Profile = () => {
     setShowCompleteEdit(true);
     try {
       const res = await axios(
-        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/edit",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/edit",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -234,7 +234,7 @@ const Profile = () => {
     setShowCompleteDelete(true);
     try {
       const res = await axios(
-        "http://localhost:8000/api/paintplz/v1/artist_profile/artwork/delete",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/delete",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
