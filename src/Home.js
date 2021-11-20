@@ -80,7 +80,7 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:artistName,surname:artistSurName,citizenID:artistcitizenID,
             email:artistEmail,username:artistUserName,password:artistPassword,
-            minimumPriceRate:artistMinPrice,maximumPriceRate:artistMaxPrice,
+            minimumPriceRate:parseFloat(artistMinPrice),maximumPriceRate:parseFloat(artistMaxPrice),
             biography:artistDesc,userType:true}})
     .then(function (response) {
       console.log(response);
