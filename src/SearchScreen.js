@@ -85,8 +85,8 @@ const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "c
 
   function getSearchResult(){
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/search_artist",
-      data:{artistName:inputVal,minimumPriceRate:minVal,maximumPriceRate:maxVal,
-            minimumRating:minStar,maximumRating:maxStar,artTag:tagsTest
+      data:{artistName:inputVal,minimumPriceRate:parseInt(minVal),maximumPriceRate:parseInt(maxVal),
+            minimumRating:parseFloat(minStar),maximumRating:parseFloat(maxStar),artTag:tagsTest
             }})
     .then(function (response) {
       console.log(response);
