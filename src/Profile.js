@@ -54,7 +54,7 @@ const Profile = () => {
 
   useEffect(() => {
     const cookies = new Cookies();
-    getProfile(cookies.get("currentUser").userId);
+    getProfile(cookies.get("currentUser").userID);
     getApiOfTag();
   }, []);
 
@@ -113,9 +113,9 @@ const Profile = () => {
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
+      console.log("user :",res.data);
       setUser(res.data);
       setArtwork(res.data.artwork);
     } catch (err) {
