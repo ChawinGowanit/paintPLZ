@@ -15,18 +15,36 @@ function SearchScreen() {
   const [minStar ,setMinStar] = useState(0); 
   const [maxStar , setMaxStar] = useState(0) ; 
 
-  const [searchTagVal , setSearchTagVal] = useState('')
 
+  const [searchHidden , setSearchHidden] = useState('')
+  const [searchTagVal , setSearchTagVal] = useState('')
+  
+  
   const [tags , setTags]  = useState([]);
   const [tagsTest ,setTagsTest ]  = useState(['3d' , 'portrait' , 'landscape' , '3d artwork' , '4d artwork' , 'Nasa Cant bring you back' , 
   'i dont know shit', 'hell' , 'think but cant reach' , 'Dek due tong done a rai ka?' , 'Done Pong']) ; 
-
+  const allTag = ['3d' , 'portrait' , 'landscape' , '3d artwork' , '4d artwork' , 'Nasa Cant bring you back' , 
+  'i dont know shit', 'hell' , 'think but cant reach' , 'Dek due tong done a rai ka?' , 'Done Pong'] ; 
+  
+  
   function removeFromTagTest(text){
     var newTag = tagsTest.filter((item)=> {
       return item!== text 
     })
     setTagsTest(newTag); 
   }
+  function addTag(x, t) {
+    var y = x.slice(0); 
+    if (y.indexOf(t) === -1) {
+      y.push(t);
+    }
+    setTagsTest(y) ; 
+    setSearchTagVal(''); 
+    setSearchHidden(t);
+
+  }
+
+ 
   
   function getApiOfTag(){
     //hashIt(password);
@@ -41,12 +59,19 @@ function SearchScreen() {
     });
   }
 
+  function setTagVal(val){
+    setSearchTagVal(val); 
+
+  }
+
   
   
   return (
     <div className = 'bg'>
    
     <div id = 'navbar'>
+
+      
     <img src= {logo} alt = 'ym picture' width="433" height="112"/>
 
     <div id = 'user-zone'>
@@ -67,6 +92,7 @@ function SearchScreen() {
       </div>
     </div>
     </div>
+    
     <div id = 'container'>
       <div id = 'search-pane'>
           
@@ -95,7 +121,12 @@ function SearchScreen() {
           
             </div>
           
-          <div className = 'area-gap'></div>
+          <div className = 'area-gap'>
+
+          
+
+
+          </div>
           <div className = 'area areaB'>
           <div className = 'text-add'>
             <text className = 'text-style'>Price Rate</text>
@@ -168,31 +199,48 @@ function SearchScreen() {
               <text className = 'text-style'>Artwork Tag</text>
             </div>
             
+
+            <div className = 'tag-search-zone' >
             <input id = 'searchTag' 
-                  type = 'text' 
+                  type = 'search' 
                   placeholder = 'Search Tag'
-                  value = {searchTagVal}
-                  onChange = {(e)=> setSearchTagVal(e.target.value)}      
+                  value = {searchHidden}
+                  onChange = {(e)=> {{setSearchTagVal(e.target.value);  setSearchHidden(e.target.value);}}  }
+                  onFocus = {()=> setSearchTagVal(searchHidden)}
+                  
+                  autoComplete = "off"
+
             >
                   
             </input>
+         
+              <div  className = 'dd-list'>
 
             
-            {/* <div className = 'dd-list'>
+                {allTag.filter((val)=> {
+                  if (searchTagVal == ""){
+                    return null;  
+                  }else if (val.toLowerCase().includes(searchTagVal.toLowerCase())){
+                    return val; 
+                  }
+                }).map((val)=>{
+                  return (
+                    <input className = 'dd-list-item' type="button" 
+                      onClick ={()=> addTag(tagsTest,val)}
+                      value = {val}
+                      
+                    /> 
+                  )
+                })}
+              </div> 
+
+          
+
+            </div>
+            
 
             
-            {tagsTest.filter((val)=> {
-              if (searchTagVal == ""){
-                return null;  
-              }else if (val.toLowerCase().includes(searchTagVal.toLowerCase())){
-                return null; 
-              }
-            }).map((val , key)=>{
-              return <button className="dd-list-item">
-                {val}
-              </button>
-            })}
-            </div> */}
+            
            
           </div>
            

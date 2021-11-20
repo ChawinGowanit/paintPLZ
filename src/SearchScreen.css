@@ -292,7 +292,8 @@
 
 #searchTag {
     width : 419px; 
-    height : 32px ; 
+    /* height : 32px ;  */
+    height : 32px;
     border: 1px solid #808080;
     border-radius: 8px;
     padding-left: 8px;
@@ -300,6 +301,8 @@
     box-sizing: border-box;
     font-size: 14px;
     font-family: Asap;
+    z-index: 1;
+    position :relative;
 }
 
 .catagory-rend {
@@ -313,4 +316,48 @@
     margin-top: 17px;
     
     
+}
+
+
+.dd-list {
+    
+    
+    flex-direction: column;
+    display: flex;
+    max-height : 150px ;
+    overflow: scroll;
+    width : 240px;  
+    border-radius: 4px;
+    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    overflow-x: hidden;
+    z-index: 1;
+   
+    
+}
+
+.dd-list-item{
+    width : 240px ; 
+    height : 32px ; 
+    
+    
+    background-color: white;
+    font-size: 14px;
+    font-family: Asap;
+    font-weight: 400;
+    line-height: 16.04px;
+    border : none; 
+    border-radius: 4px;
+    
+}
+.dd-list-item:hover{
+    background-color: grey;
+}
+
+
+.tag-search-zone {
+
+    
+    align-self: baseline;
+    z-index: 1;
 }
