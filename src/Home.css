@@ -139,6 +139,7 @@ h2 {
 .loginfail-modal .red-btn {
   width: 148px;
   height: 40px;
+  justify-content: flex-end;
 }
 .register-modal {
   width: 717px;

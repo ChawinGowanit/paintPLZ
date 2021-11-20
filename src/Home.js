@@ -43,7 +43,7 @@ function Home() {
       data:{username:username,password:password}})
     .then(function (response) {
       const cookies = new Cookies();
-      cookies.set("currentUser", response, { path: '/' })
+      cookies.set("currentUser", response.data, { path: '/' })
       if (response.data.userType){
         window.location.replace("http://localhost:3000/paintplz/v1/profile")
       }
