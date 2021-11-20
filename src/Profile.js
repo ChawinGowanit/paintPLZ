@@ -57,7 +57,6 @@ const Profile = () => {
       tagID: "a91530b6-2f49-447b-84a7-9137f9853213",
       tagName: "character design",
     },
-    ,
     { tagID: "9faf83d2-325e-45f3-9827-d02b4d954690", tagName: "3d" },
     ,
     { tagID: "b2e323fc-97db-43c9-9c97-76fdc5fdda01", tagName: "4d" },
