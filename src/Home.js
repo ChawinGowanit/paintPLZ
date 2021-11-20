@@ -14,6 +14,9 @@ function Home() {
   const [modal3, setIsOpen3] = React.useState(false);
   const [modal4, setIsOpen4] = React.useState(false);
   const [modal5, setIsOpen5] = React.useState(false);
+  const [modal6, setIsOpen6] = React.useState(false);
+  const [modal7, setIsOpen7] = React.useState(false);
+
 
 
   const [username, setUserName] = React.useState("");
@@ -42,6 +45,7 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
+      console.log(response);
       const cookies = new Cookies();
       cookies.set("currentUser", response.data, { path: '/' })
       if (response.data.userType){
@@ -52,6 +56,7 @@ function Home() {
       }
     })
     .catch(function (error) {
+      console.log(error);
       openModal5()
     });
   }
@@ -63,9 +68,11 @@ function Home() {
             userType:false}})
     .then(function (response) {
       console.log(response);
+      openModal6()
     })
     .catch(function (error) {
       console.log(error);
+      openModal7()
     });
   }
 
@@ -77,9 +84,11 @@ function Home() {
             biography:artistDesc,userType:true}})
     .then(function (response) {
       console.log(response);
+      openModal6()
     })
     .catch(function (error) {
       console.log(error);
+      openModal7()
     });
   }
 
@@ -97,6 +106,12 @@ function Home() {
   }
   function openModal5() {
     setIsOpen5(true);
+  }
+  function openModal6() {
+    setIsOpen6(true);
+  }
+  function openModal7() {
+    setIsOpen7(true);
   }
 
   function closeModal1() {
@@ -132,6 +147,13 @@ function Home() {
   }
   function closeModal5() {
     setIsOpen5(false);
+  }
+  function closeModal6() {
+    setIsOpen6(false);
+    setIsOpen3(false);
+  }
+  function closeModal7() {
+    setIsOpen7(false);
   }
   return (
     <div className = 'bg-1'>
@@ -300,6 +322,40 @@ function Home() {
           <div className="center">
             <h2>Incorrect username or password</h2>
             <button className="red-btn" onClick={closeModal5}>close</button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={modal6}
+        onRequestClose={closeModal6}
+        contentLabel="Register Customer modal"
+        className="modal"
+      >
+        <div className="modal-content registerSuccess-modal">
+          <div className="button-close">
+            <span className="close" onClick={closeModal6}>&times;</span>
+          </div>
+          <div className="center">
+            <h2>Registration success</h2>
+            <button className="green-btn" onClick={closeModal6}>close</button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={modal7}
+        onRequestClose={closeModal7}
+        contentLabel="Register Customer modal"
+        className="modal"
+      >
+        <div className="modal-content registerSuccess-modal">
+          <div className="button-close">
+            <span className="close" onClick={closeModal7}>&times;</span>
+          </div>
+          <div className="center">
+            <h2>Invalid Information</h2>
+            <button className="red-btn" onClick={closeModal7}>close</button>
           </div>
         </div>
       </Modal>

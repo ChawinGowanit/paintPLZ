@@ -159,6 +159,14 @@ h2 {
   height: 32px;
   padding: 7px, 16px, 7px, 16px;
 }
+.registerSuccess-modal {
+  width: 335px;
+}
+.registerSuccess-modal .green-btn,
+.registerSuccess-modal .red-btn {
+  width: 148px;
+  height: 40px;
+}
 .close {
   color: #000;
   float: right;
