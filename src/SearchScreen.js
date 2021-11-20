@@ -48,7 +48,7 @@ const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "c
   
   function removeFromTagTest(text){
     var newTag = tagsTest.filter((item)=> {
-      return item!== text 
+      return item.tagName!== text 
     })
     setTagsTest(newTag); 
   }
