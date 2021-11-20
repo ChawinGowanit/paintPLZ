@@ -110,6 +110,7 @@ const Profile = () => {
     const endpoint =  "http://localhost:1323/api/paintplz/v1/artist_profile/" + id;
     axios({ method: "GET", url: endpoint })
     .then(function (res) {
+      console.log("Response:" ,res);
       setUser(res.data);
       setArtwork(res.data.artwork);
     })
@@ -149,10 +150,7 @@ const Profile = () => {
   };
 
   const confirmUpload = async (name, desc, tag, url) => {
-    setUploadDesc(null);
-    setUploadName(null);
-    setUploadTag([]);
-    setUpload(false);
+
 
     try {
       const res = await axios(
@@ -181,7 +179,7 @@ const Profile = () => {
   };
 
   const confirmEdit = async (id, name, desc, tag, url) => {
-    setShowCompleteEdit(true);
+  
     try {
       const res = await axios(
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/edit",
@@ -208,7 +206,7 @@ const Profile = () => {
   };
 
   const confirmDelete = async (id) => {
-    setShowCompleteDelete(true);
+    
     try {
       const res = await axios(
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/delete",
@@ -220,6 +218,7 @@ const Profile = () => {
         }
       );
       setShowConfirmDelete(false);
+      setShowCompleteDelete(true);
       getProfile();
     } catch (err) {
       throw err;
