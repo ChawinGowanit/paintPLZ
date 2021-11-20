@@ -2,6 +2,8 @@ import './Home.css';
 import Modal from 'react-modal';
 import React from 'react';
 import axios from 'axios';
+import logo from './logo.png'
+
 
 
 
@@ -119,7 +121,7 @@ function Home() {
     <div className="App">
 
       <div className="box">
-        <h1>PaintPlz</h1>
+        <img src= {logo} alt = 'ym picture' width="305" height="64"/>
         <div className="button-control">
           <button className="green-btn length-btn"onClick={openModal1}>Login</button>
           <button className="green-btn length-btn"onClick={openModal2}>Register</button>
