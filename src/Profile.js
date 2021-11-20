@@ -329,7 +329,7 @@ const Profile = () => {
                       }}
                     >
                       {" "}
-                      ${user.minimunPriceRate} - ${user.maximumPriceRate}
+                      ${user.minimumPriceRate} - ${user.maximumPriceRate}
                     </Text>
                   </Col>
                 </Row>
