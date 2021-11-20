@@ -153,7 +153,7 @@ const Profile = () => {
         {
           method: "POST",
           data: {
-            username: user.username,
+            userID: user.userID,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
@@ -178,7 +178,7 @@ const Profile = () => {
         {
           method: "POST",
           data: {
-            username: user.username,
+            userID: user.userID,
             artworkID: id,
             artworkName: name,
             artworkDescription: desc,
@@ -201,7 +201,7 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/delete",
         {
           method: "POST",
-          data: { username: user.username, artworkID: id },
+          data: { artistUserID: user.userID, artworkID: id },
         }
       );
       setShowConfirmDelete(false);
