@@ -64,6 +64,10 @@ h2 {
 }
 
 .box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 369px;
   height: 254px;
   padding: 5rem;
@@ -75,6 +79,9 @@ h2 {
 .box .green-btn {
   width: 148px;
   height: 40px;
+}
+.box img {
+  margin-bottom: 25px;
 }
 .button-close {
   display: flex;
@@ -173,13 +180,17 @@ input {
   font-family: Asap;
 }
 input:focus {
-  outline-color: #28a745;
+  outline-color: #00cd90;
 }
 
 textarea {
   width: 687px;
   border-radius: 8px;
 }
+textarea:focus {
+  outline-color: #00cd90;
+}
+
 label {
   font-size: 16px;
   font-family: Asap;
