@@ -56,10 +56,11 @@ const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "c
   function addTag(x, t) {
     
     var y = x.slice(0); 
-    if (y.indexOf(t) === -1) {
-      y.push(t);
-    }
-    setTagsTest(y) ; 
+    
+    var result = y.filter(item => item.tagName != t.tagName)
+    result.push(t); 
+
+    setTagsTest(result) ; 
     setSearchTagVal(''); 
     setSearchHidden(t.tagName);
 
