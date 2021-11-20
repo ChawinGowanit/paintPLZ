@@ -39,6 +39,7 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
+      setCookie("currentUser", response, { path: '/' })
       if (response.data.userType){
         window.location.replace("http://localhost:3000/paintplz/v1/profile")
       }
