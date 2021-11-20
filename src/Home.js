@@ -152,6 +152,7 @@ function Home() {
     setIsOpen6(false);
     setIsOpen3(false);
     setIsOpen4(false);
+    setIsOpen2(false);
   }
   function closeModal7() {
     setIsOpen7(false);
