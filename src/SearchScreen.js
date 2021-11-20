@@ -69,7 +69,7 @@ const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "c
   
   function getApiOfTag(){
     //hashIt(password);
-    axios({method:"GET", url:"http://localhost:8000/api/paintplz/v1/tags"})
+    axios({method:"GET", url:"http://localhost:1323/api/paintplz/v1/tags"})
     .then(function (response) {
       console.log(response);
       setTags(response.data.tags)
@@ -80,10 +80,7 @@ const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "c
     });
   }
 
-  function setTagVal(val){
-    setSearchTagVal(val); 
-
-  }
+  
 
   function getSearchResult(){
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/search_artist",
