@@ -130,6 +130,16 @@ h2 {
   width: 335px;
   height: 306px;
 }
+.loginfail-modal {
+  width: 335px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.loginfail-modal .red-btn {
+  width: 148px;
+  height: 40px;
+}
 .register-modal {
   width: 717px;
 }

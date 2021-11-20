@@ -52,7 +52,7 @@ function Home() {
       }
     })
     .catch(function (error) {
-      openModal5
+      openModal5()
     });
   }
 
@@ -141,7 +141,7 @@ function Home() {
       <div className="box">
         <img src= {logo} alt = 'ym picture' width="305" height="64"/>
         <div className="button-control">
-          <button className="green-btn length-btn"onClick={openModal1}>Login</button>
+          <button className="green-btn length-btn"onClick={openModal5}>Login</button>
           <button className="green-btn length-btn"onClick={openModal2}>Register</button>
         </div>
       </div>
@@ -294,7 +294,7 @@ function Home() {
         contentLabel="Register Customer modal"
         className="modal"
       >
-        <div className="modal-content register-modal">
+        <div className="modal-content loginfail-modal">
           <div className="button-close">
             <span className="close" onClick={closeModal5}>&times;</span>
           </div>
