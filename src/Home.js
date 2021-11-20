@@ -35,8 +35,8 @@ function Home() {
   const [artistPassword,setArtistPassword]    = React.useState("");
   const [artistcitizenID,setArtistcitizenID]  = React.useState("");
   const [artistEmail,setArtistEmail]          = React.useState("");
-  const [artistMaxPrice,setArtistMaxPrice]    = React.useState("");
-  const [artistMinPrice,setArtistMinPrice]    = React.useState("");
+  const [artistMaxPrice,setArtistMaxPrice]    = React.useState(0);
+  const [artistMinPrice,setArtistMinPrice]    = React.useState(0);
   const [artistDesc,setArtistDesc]            = React.useState("");
 
 
