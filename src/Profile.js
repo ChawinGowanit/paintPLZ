@@ -116,6 +116,7 @@ const Profile = () => {
           withCredentials: true,
         }
       );
+      console.log("user :",res.data);
       setUser(res.data);
       setArtwork(res.data.artwork);
     } catch (err) {
