@@ -20,9 +20,9 @@ import {
   EditOutlined,
   EyeOutlined,
   CloseCircleOutlined,
-  PlusCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+import Cookies from "universal-cookie";
 
 const { TabPane } = Tabs;
 
@@ -42,30 +42,21 @@ const Profile = () => {
   const [editTag, setEditTag] = useState(null);
   const [editUrl, setEditUrl] = useState(null);
   const [uploadName, setUploadName] = useState(null);
-  //const [tags, setTags] = useState(null);
+  const [tags, setTags] = useState(null);
   const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
   const [uploadTag, setUploadTag] = useState([]);
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
-  //const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+
 
   useEffect(() => {
-    getProfile();
+    const cookies = new Cookies();
+    getProfile(cookies.get("currentUser").userId);
     getApiOfTag();
   }, []);
-
-  const user = {
-    userID: "00000005",
-    username: "DengXiaoPing",
-    name: "XiaoPing",
-    surname: "Deng",
-    rating: 4.9,
-    minimunPriceRate: 1000,
-    maximumPriceRate: 2000,
-    Biography: "I’m the fastest man alive.",
-  };
 
   function removeFromEditTag(text) {
     var newTag = editTag.filter((item) => {
@@ -88,24 +79,12 @@ const Profile = () => {
     setSearchedTags([]);
   }
 
-  const tags = [
-    "exile",
-    "water",
-    "fountain",
-    "millen",
-    "idk",
-    "yarknorn",
-    "hbd",
-    "ily",
-    "nammmm",
-  ];
-
   function getApiOfTag() {
     //hashIt(password);
     axios({ method: "GET", url: "http://localhost:1323/api/paintplz/v1/tags" })
       .then(function (response) {
         console.log(response);
-        //   setTags(response.data.tags);
+        setTags(response.data.tags);
       })
       .catch(function (error) {
         console.log(error);
@@ -126,17 +105,18 @@ const Profile = () => {
     }
   };
 
-  const getProfile = async () => {
+  const getProfile = async (id) => {
+    const endpoint =  "http://localhost:1323/api/paintplz/v1/artist_profile/" + id;
     try {
       const res = await axios(
-        "http://localhost:1323/api/paintplz/v1/artist_profile/kirkpig",
+        endpoint,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      //setUser(res.data);
+      setUser(res.data);
       setArtwork(res.data.artwork);
     } catch (err) {
       throw err;
@@ -189,15 +169,15 @@ const Profile = () => {
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-            artworkUrl: "www.bibibibi.com",
+            artworkUrl: "Artwork.png",
           },
         }
       );
-      // setUploadDesc(null);
-      // setUploadName(null);
-      // setUploadTag(null);
-      // setUpload(false);
-      getProfile();
+      setUploadDesc(null);
+      setUploadName(null);
+      setUploadTag(null);
+      setUpload(false);
+      getProfile(user.username);
     } catch (err) {
       throw err;
     }
@@ -218,7 +198,7 @@ const Profile = () => {
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-            artworkUrl: "www.maiwailaew.com",
+            artworkUrl: "image 1.png",
           },
         }
       );
@@ -264,44 +244,6 @@ const Profile = () => {
   const onChangeUploadName = (e) => {
     setUploadName(e.target.value);
   };
-
-  const mockartwork = [
-    {
-      artworkID: 1,
-      title: "Monalisa",
-      description: "test",
-      artTag: ["A", "B"],
-      url: "Artwork.png",
-    },
-    {
-      artworkID: 1,
-      title: "Monalisa",
-      description: "test",
-      artTag: ["A", "B"],
-      url: "image 1.png",
-    },
-    {
-      artworkID: 1,
-      title: "Monalisa",
-      description: "test",
-      artTag: ["A", "B"],
-      url: "artwork2.jpg",
-    },
-    {
-      artworkID: 1,
-      title: "Monalisa",
-      description: "test",
-      artTag: ["A", "B"],
-      url: "image 1.png",
-    },
-    {
-      artworkID: 1,
-      title: "Monalisa",
-      description: "test",
-      artTag: ["A", "B"],
-      url: "artwork2.jpg",
-    },
-  ];
 
   return (
     <Layout className="bg">
@@ -430,7 +372,7 @@ const Profile = () => {
                       swipeable={true}
                       partialVisibile={true}
                     >
-                      {mockartwork.map((a) => {
+                      {artwork.map((a) => {
                         return (
                           <div
                             onClick={() => onclickPic(a)}
@@ -508,7 +450,7 @@ const Profile = () => {
               placeholder="Search tags"
             />
             {searchedTags.map((t) => {
-              return <div onClick={() => addTag(uploadTag, t)}>{t}</div>;
+              return <div onClick={() => addTag(uploadTag, t)}>{t.tagName}</div>;
             })}
             <Row style={{ marginBottom: 20 }}>
               {uploadTag.map((t) => {
@@ -530,7 +472,7 @@ const Profile = () => {
                     }}
                   >
                     <Row justify="space-between" style={{ width: "55%" }}>
-                      <Col> {t} </Col>
+                      <Col> {t.tagName} </Col>
                       <Col onClick={() => removeFromUploadTag(t)}>X</Col>
                     </Row>
                   </div>
@@ -635,7 +577,7 @@ const Profile = () => {
                         border: "none",
                       }}
                     >
-                      {t}
+                      {t.tagName}
                     </Button>
                   );
                 })}
@@ -789,7 +731,7 @@ const Profile = () => {
                 placeholder="Search tags"
               />
               {searchedTags.map((t) => {
-                return <div onClick={() => addTag(editTag, t)}>{t}</div>;
+                return <div onClick={() => addTag(editTag, t)}>{t.tagName}</div>;
               })}
               <Row style={{ marginBottom: 10 }}>
                 {editTag.map((t) => {
@@ -812,7 +754,7 @@ const Profile = () => {
                       }}
                     >
                       <Row justify="space-between" style={{ width: "55%" }}>
-                        <Col> {t} </Col>
+                        <Col> {t.tagName} </Col>
                         <Col onClick={() => removeFromEditTag(t)}>X</Col>
                       </Row>
                     </div>
