@@ -52,7 +52,7 @@ function Home() {
       }
     })
     .catch(function (error) {
-      console.log(error);
+      openModal5
     });
   }
 
@@ -289,17 +289,17 @@ function Home() {
       </Modal>
 
       <Modal
-        isOpen={modal4}
-        onRequestClose={closeModal4}
+        isOpen={modal5}
+        onRequestClose={closeModal5}
         contentLabel="Register Customer modal"
         className="modal"
       >
         <div className="modal-content register-modal">
           <div className="button-close">
-            <span className="close" onClick={closeModal4}>&times;</span>
+            <span className="close" onClick={closeModal5}>&times;</span>
           </div>
           <h2>Incorrect username or password</h2>
-          <button className="red-btn" onClick={openModal3}>close</button>
+          <button className="red-btn" onClick={closeModal5}>close</button>
         </div>
       </Modal>
     </div>
