@@ -119,7 +119,6 @@ h2 {
 }
 
 .modal-content {
-  width: 40%;
   border-radius: 8px;
   background-color: #fefefe;
   margin: auto;
@@ -132,14 +131,16 @@ h2 {
 }
 .loginfail-modal {
   width: 335px;
+}
+.center {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .loginfail-modal .red-btn {
   width: 148px;
   height: 40px;
-  justify-content: flex-end;
 }
 .register-modal {
   width: 717px;

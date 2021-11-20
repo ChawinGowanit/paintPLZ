@@ -132,7 +132,6 @@ function Home() {
   }
   function closeModal5() {
     setIsOpen5(false);
-    
   }
   return (
     <div className = 'bg-1'>
@@ -141,7 +140,7 @@ function Home() {
       <div className="box">
         <img src= {logo} alt = 'ym picture' width="305" height="64"/>
         <div className="button-control">
-          <button className="green-btn length-btn"onClick={openModal5}>Login</button>
+          <button className="green-btn length-btn"onClick={openModal1}>Login</button>
           <button className="green-btn length-btn"onClick={openModal2}>Register</button>
         </div>
       </div>
@@ -298,8 +297,10 @@ function Home() {
           <div className="button-close">
             <span className="close" onClick={closeModal5}>&times;</span>
           </div>
-          <h2>Incorrect username or password</h2>
-          <button className="red-btn" onClick={closeModal5}>close</button>
+          <div className="center">
+            <h2>Incorrect username or password</h2>
+            <button className="red-btn" onClick={closeModal5}>close</button>
+          </div>
         </div>
       </Modal>
     </div>
