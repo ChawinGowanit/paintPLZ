@@ -23,7 +23,8 @@ function SearchScreen() {
   const [tags , setTags] = useState(''); 
   const [tagsTest ,setTagsTest ]  = useState([]) ; 
   
-const allTag = [{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "character design"},
+const allTag = [{"tagID" : "917ea4ef-5770-4fd5-9d2c-1a3a346f1c50","tagName" : "2d"}
+,{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "character design"},
 ,{"tagID" : "9faf83d2-325e-45f3-9827-d02b4d954690","tagName" : "3d"},
 ,{"tagID" : "b2e323fc-97db-43c9-9c97-76fdc5fdda01","tagName" : "4d"},
 ,{"tagID" : "d046c9c3-ba55-44ff-b7f8-56ec0b5943fb","tagName" : "background"},

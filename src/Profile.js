@@ -112,7 +112,7 @@ const Profile = () => {
     .then(function (res) {
       console.log("Response:" ,res);
       setUser(res.data);
-      setArtwork(res.data.artwork);
+      setArtwork(res.data.artworks);
     })
     .catch(function (error) {
       console.log(error);
