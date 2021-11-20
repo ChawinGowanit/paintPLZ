@@ -36,7 +36,7 @@ function Home() {
 
 
   function logIn(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/login",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
       console.log(response);
@@ -47,7 +47,7 @@ function Home() {
   }
 
   function customerRegister(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/register",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:customerName,surname:customerSurName,citizenID:customercitizenID,
             email:customerEmail,username:customerUserName,password:customerPassword,
             userType:false}})
@@ -60,7 +60,7 @@ function Home() {
   }
 
   function artistRegister(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/register",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:customerName,surname:customerSurName,citizenID:customercitizenID,
             email:customerEmail,username:customerUserName,password:customerPassword,
             minimumPriceRate:artistMinPrice,maximumPriceRate:artistMaxPrice,
