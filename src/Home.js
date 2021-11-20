@@ -39,7 +39,12 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
-      console.log(response);
+      if (response.data.userType){
+        window.location.replace("http://localhost:3000/paintplz/v1/profile")
+      }
+      else {
+        window.location.replace("http://localhost:3000/paintplz/v1/search")
+      }
     })
     .catch(function (error) {
       console.log(error);
