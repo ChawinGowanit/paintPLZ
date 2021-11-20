@@ -173,13 +173,17 @@ input {
   font-family: Asap;
 }
 input:focus {
-  outline-color: #28a745;
+  outline-color: #00cd90;
 }
 
 textarea {
   width: 687px;
   border-radius: 8px;
 }
+textarea:focus {
+  outline-color: #00cd90;
+}
+
 label {
   font-size: 16px;
   font-family: Asap;
