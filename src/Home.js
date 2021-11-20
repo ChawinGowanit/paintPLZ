@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import React from 'react';
 import axios from 'axios';
 import logo from './logo.png'
+import Cookies from 'universal-cookie';
 
 
 
@@ -12,6 +13,8 @@ function Home() {
   const [modal2, setIsOpen2] = React.useState(false);
   const [modal3, setIsOpen3] = React.useState(false);
   const [modal4, setIsOpen4] = React.useState(false);
+  const [modal5, setIsOpen5] = React.useState(false);
+
 
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -39,7 +42,8 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
-      setCookie("currentUser", response, { path: '/' })
+      const cookies = new Cookies();
+      cookies.set("currentUser", response, { path: '/' })
       if (response.data.userType){
         window.location.replace("http://localhost:3000/paintplz/v1/profile")
       }
@@ -91,6 +95,10 @@ function Home() {
   function openModal4() {
     setIsOpen4(true);
   }
+  function openModal5() {
+    setIsOpen5(true);
+  }
+
   function closeModal1() {
     setIsOpen1(false);
     setUserName("");
@@ -121,6 +129,10 @@ function Home() {
     setArtistMinPrice("");
     setArtistMaxPrice("");
     setArtistDesc("");
+  }
+  function closeModal5() {
+    setIsOpen5(false);
+    
   }
   return (
     <div className = 'bg-1'>
@@ -276,6 +288,20 @@ function Home() {
         </div>
       </Modal>
 
+      <Modal
+        isOpen={modal4}
+        onRequestClose={closeModal4}
+        contentLabel="Register Customer modal"
+        className="modal"
+      >
+        <div className="modal-content register-modal">
+          <div className="button-close">
+            <span className="close" onClick={closeModal4}>&times;</span>
+          </div>
+          <h2>Incorrect username or password</h2>
+          <button className="red-btn" onClick={openModal3}>close</button>
+        </div>
+      </Modal>
     </div>
 
 </div>    
