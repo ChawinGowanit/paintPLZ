@@ -12,8 +12,8 @@ function SearchScreen() {
   const [inputVal , setinputVal] = useState(''); 
   const [minVal , setMinVal] = useState(0); 
   const [maxVal , setMaxVal] = useState(0); 
-  const [minStar ,setMinStar] = useState(0); 
-  const [maxStar , setMaxStar] = useState(0) ; 
+  const [minStar ,setMinStar] = useState(0.00); 
+  const [maxStar , setMaxStar] = useState(0.00) ; 
 
 
   const [searchHidden , setSearchHidden] = useState('')
