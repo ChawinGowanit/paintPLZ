@@ -54,7 +54,7 @@ const Profile = () => {
 
   useEffect(() => {
     const cookies = new Cookies();
-    getProfile(cookies.get("currentUser").username);
+    getProfile(cookies.get("currentUser").userID);
     getApiOfTag();
   }, []);
 
