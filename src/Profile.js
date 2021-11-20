@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import {
   Layout,
-  Menu,
   Input,
   Typography,
   Button,
@@ -11,7 +10,6 @@ import {
   Checkbox,
 } from "antd";
 import { Row, Col, Tabs } from "antd";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./profile.css";
 import axios from "axios";
@@ -20,6 +18,7 @@ import {
   EditOutlined,
   EyeOutlined,
   CloseCircleOutlined,
+  CheckOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import Cookies from "universal-cookie";
@@ -44,6 +43,7 @@ const Profile = () => {
   const [editUrl, setEditUrl] = useState(null);
   const [uploadName, setUploadName] = useState(null);
   const [tags, setTags] = useState(null);
+  const [uploaded, setUploaded] = useState(false);
   const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
   const [uploadTag, setUploadTag] = useState([]);
@@ -119,25 +119,6 @@ const Profile = () => {
       });
   };
 
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 3,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
   const onClickUpload = () => {
     setUpload(true);
   };
@@ -165,6 +146,7 @@ const Profile = () => {
       setUploadDesc(null);
       setUploadName(null);
       setUploadTag(null);
+      setUploaded(false);
       setUpload(false);
       setShowCompleteUpload(true);
       getProfile(user.username);
@@ -288,7 +270,7 @@ const Profile = () => {
                 Biography
               </Row>
               <Row style={{ fontSize: 16, color: "gray" }}>
-                {user.Biography}
+                {user.biography}
               </Row>
             </Col>
           </Row>
@@ -316,7 +298,11 @@ const Profile = () => {
                     </Row>
                   </Col>
                   <Col>
-                    <Rate count={5} disabled defaultValue={5} />
+                    <Rate
+                      count={5}
+                      disabled
+                      defaultValue={Math.round(user.rating)}
+                    />
                   </Col>
                 </Row>
 
@@ -343,57 +329,41 @@ const Profile = () => {
                       }}
                     >
                       {" "}
-                      $100 - $2000
+                      ${user.minimunPriceRate} - ${user.maximumPriceRate}
                     </Text>
                   </Col>
                 </Row>
 
                 <Row style={{ marginTop: 15 }}>
-                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
+                  <Col style={{ fontSize: 20, fontWeight: "bold", width: 150 }}>
                     My Work
-                    <Carousel
-                      responsive={responsive}
-                      arrows={false}
-                      swipeable={true}
-                      partialVisibile={true}
+                  </Col>
+                  {artwork.length == 0 ? (
+                    <span
+                      style={{
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      No artwork uploaded yet :({" "}
+                    </span>
+                  ) : (
+                    <Col
+                      span={24}
+                      style={{ overflowX: "scroll", whiteSpace: "nowrap" }}
                     >
                       {artwork.map((a) => {
                         return (
-                          <div
+                          <img
                             onClick={() => onclickPic(a)}
-                            style={{ marginRight: 10 }}
-                          >
-                            <img style={{ maxHeight: 167 }} src={a.url} />
-                          </div>
+                            style={{ maxHeight: 167, marginRight: 20 }}
+                            src={a.url}
+                          />
                         );
                       })}
-                    </Carousel>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: 15 }}>
-                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
-                    My Gallery
-                    <Carousel
-                      responsive={responsive}
-                      arrows={false}
-                      swipeable={true}
-                      partialVisible={true}
-                    >
-                      <div style={{ background: "" }}>
-                        <img src="./image 1.png" />
-                      </div>
-
-                      <div>
-                        <img src="./Artwork.png" />
-                      </div>
-                      <div>
-                        <img height="167" src="./artwork2.jpg" />
-                      </div>
-                      <div>
-                        <img height="167" src="./artwork2.jpg" />
-                      </div>
-                    </Carousel>
-                  </Col>
+                    </Col>
+                  )}
                 </Row>
               </TabPane>
 
@@ -402,12 +372,6 @@ const Profile = () => {
               </TabPane>
 
               <TabPane tab="Gallery" key="3" disabled>
-                <Carousel responsive={responsive} arrows={false}>
-                  <div>Item 1</div>
-                  <div>Item 2</div>
-                  <div>Item 3</div>
-                  <div>Item 4</div>
-                </Carousel>
               </TabPane>
             </Tabs>
           </Row>
@@ -422,6 +386,7 @@ const Profile = () => {
               setUploadDesc(null);
               setUploadTag([]);
               setUploadName(null);
+              setUploaded(false);
             }}
           >
             Artwork Name
@@ -472,17 +437,17 @@ const Profile = () => {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                style={{ background: "green", alignSelf: "center" }}
+                style={{ backgroundColor: uploaded ? "red":"green", alignSelf: "center" }}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 //beforeUpload={beforeUpload}
-                //onChange={this.handleChange}
+                onChange={() => setUploaded(true)}
               >
                 {/* {imageUrl ? (
               <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
               uploadButton
             )} */}
-                Upload artwork
+                {uploaded ? <span>File Uploaded</span> : <span>Upload artwork </span>}
               </Upload>
               <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
                 <Button
@@ -499,45 +464,43 @@ const Profile = () => {
                     confirmUpload(uploadName, uploadDesc, uploadTag, uploadUrl)
                   }
                 >
-                  Submit <EditOutlined />
+                  Submit <CheckOutlined />
                 </Button>
               </Row>
             </Row>
-
-
             <Modal
-                centered
-                onCancel={() => setShowCompleteUpload(false)}
-                visible={showCompleteUpload}
-                title="Upload Completed"
-                footer={null}
+              centered
+              onCancel={() => setShowCompleteUpload(false)}
+              visible={showCompleteUpload}
+              title="Upload Completed"
+              footer={null}
+            >
+              <Row
+                style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
               >
-                <Row
-                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
-                >
-                  Artwork has been uploaded.
-                </Row>
+                Artwork has been uploaded.
+              </Row>
 
-                <Row style={{ width: "100%", marginTop: 25 }}>
-                  <Col span={24}>
-                    <Button
-                      type="round"
-                      style={{
-                        width: "95%",
-                        color: "white",
-                        background: "#4CD75F",
-                        border: "none",
-                      }}
-                      onClick={() => {
-                        setShowCompleteUpload(false);
-                        setShowConfirmUpload(false);
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </Col>
-                </Row>
-              </Modal>
+              <Row style={{ width: "100%", marginTop: 25 }}>
+                <Col span={24}>
+                  <Button
+                    type="round"
+                    style={{
+                      width: "95%",
+                      color: "white",
+                      background: "#4CD75F",
+                      border: "none",
+                    }}
+                    onClick={() => {
+                      setShowCompleteUpload(false);
+                      //setShowConfirmUpload(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Col>
+              </Row>
+            </Modal>
           </Modal>
 
           {active && (
@@ -805,7 +768,7 @@ const Profile = () => {
                   }}
                   onClick={() => setShowConfirmEdit(true)}
                 >
-                  Submit
+                  Submit <CheckOutlined />
                 </Button>
               </Row>
               <Modal
