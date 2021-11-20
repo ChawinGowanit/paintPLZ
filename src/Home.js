@@ -2,6 +2,8 @@ import './Home.css';
 import Modal from 'react-modal';
 import React from 'react';
 import axios from 'axios';
+import logo from './logo.png'
+
 
 
 
@@ -34,7 +36,7 @@ function Home() {
 
 
   function logIn(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/login",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/login",
       data:{username:username,password:password}})
     .then(function (response) {
       console.log(response);
@@ -45,7 +47,7 @@ function Home() {
   }
 
   function customerRegister(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/register",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:customerName,surname:customerSurName,citizenID:customercitizenID,
             email:customerEmail,username:customerUserName,password:customerPassword,
             userType:false}})
@@ -58,7 +60,7 @@ function Home() {
   }
 
   function artistRegister(){
-    axios({method:"POST", url:"http://localhost:8000/api/paintplz/v1/register",
+    axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:customerName,surname:customerSurName,citizenID:customercitizenID,
             email:customerEmail,username:customerUserName,password:customerPassword,
             minimumPriceRate:artistMinPrice,maximumPriceRate:artistMaxPrice,
@@ -119,7 +121,7 @@ function Home() {
     <div className="App">
 
       <div className="box">
-        <h1>PaintPlz</h1>
+        <img src= {logo} alt = 'ym picture' width="305" height="64"/>
         <div className="button-control">
           <button className="green-btn length-btn"onClick={openModal1}>Login</button>
           <button className="green-btn length-btn"onClick={openModal2}>Register</button>
