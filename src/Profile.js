@@ -450,7 +450,7 @@ const Profile = () => {
               placeholder="Search tags"
             />
             {searchedTags.map((t) => {
-              return <div onClick={() => addTag(uploadTag, t)}>{t}</div>;
+              return <div onClick={() => addTag(uploadTag, t)}>{t.tagName}</div>;
             })}
             <Row style={{ marginBottom: 20 }}>
               {uploadTag.map((t) => {
@@ -472,7 +472,7 @@ const Profile = () => {
                     }}
                   >
                     <Row justify="space-between" style={{ width: "55%" }}>
-                      <Col> {t} </Col>
+                      <Col> {t.tagName} </Col>
                       <Col onClick={() => removeFromUploadTag(t)}>X</Col>
                     </Row>
                   </div>
@@ -577,7 +577,7 @@ const Profile = () => {
                         border: "none",
                       }}
                     >
-                      {t}
+                      {t.tagName}
                     </Button>
                   );
                 })}
@@ -731,7 +731,7 @@ const Profile = () => {
                 placeholder="Search tags"
               />
               {searchedTags.map((t) => {
-                return <div onClick={() => addTag(editTag, t)}>{t}</div>;
+                return <div onClick={() => addTag(editTag, t)}>{t.tagName}</div>;
               })}
               <Row style={{ marginBottom: 10 }}>
                 {editTag.map((t) => {
@@ -754,7 +754,7 @@ const Profile = () => {
                       }}
                     >
                       <Row justify="space-between" style={{ width: "55%" }}>
-                        <Col> {t} </Col>
+                        <Col> {t.tagName} </Col>
                         <Col onClick={() => removeFromEditTag(t)}>X</Col>
                       </Row>
                     </div>
