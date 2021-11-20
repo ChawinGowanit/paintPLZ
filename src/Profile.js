@@ -106,21 +106,18 @@ const Profile = () => {
   };
 
   const getProfile = async (id) => {
+
     const endpoint =  "http://localhost:1323/api/paintplz/v1/artist_profile/" + id;
-    try {
-      const res = await axios(
-        endpoint,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      console.log("user :",res.data);
+    axios({ method: "GET", url: endpoint })
+    .then(function (res) {
       setUser(res.data);
       setArtwork(res.data.artwork);
-    } catch (err) {
-      throw err;
-    }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+   
   };
 
   const responsive = {
