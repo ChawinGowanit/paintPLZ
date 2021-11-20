@@ -37,6 +37,7 @@ const Profile = () => {
   const [showConfirmEdit, setShowConfirmEdit] = useState(false);
   const [showCompleteDelete, setShowCompleteDelete] = useState(false);
   const [showCompleteEdit, setShowCompleteEdit] = useState(false);
+  const [showCompleteUpload, setShowCompleteUpload] = useState(false);
   const [editName, setEditName] = useState(null);
   const [editDesc, setEditDesc] = useState(null);
   const [editTag, setEditTag] = useState(null);
@@ -165,6 +166,7 @@ const Profile = () => {
       setUploadName(null);
       setUploadTag(null);
       setUpload(false);
+      setShowCompleteUpload(true);
       getProfile(user.username);
     } catch (err) {
       throw err;
@@ -501,6 +503,41 @@ const Profile = () => {
                 </Button>
               </Row>
             </Row>
+
+
+            <Modal
+                centered
+                onCancel={() => setShowCompleteUpload(false)}
+                visible={showCompleteUpload}
+                title="Upload Completed"
+                footer={null}
+              >
+                <Row
+                  style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+                >
+                  Artwork has been uploaded.
+                </Row>
+
+                <Row style={{ width: "100%", marginTop: 25 }}>
+                  <Col span={24}>
+                    <Button
+                      type="round"
+                      style={{
+                        width: "95%",
+                        color: "white",
+                        background: "#4CD75F",
+                        border: "none",
+                      }}
+                      onClick={() => {
+                        setShowCompleteUpload(false);
+                        setShowConfirmUpload(false);
+                      }}
+                    >
+                      Close
+                    </Button>
+                  </Col>
+                </Row>
+              </Modal>
           </Modal>
 
           {active && (
