@@ -98,7 +98,7 @@ const Profile = () => {
       let result = [];
       console.log(value);
       result = tags.filter((data) => {
-        return data.name.includes(value);
+        return data.tagName.includes(value);
       });
       setSearchedTags(result);
     }
