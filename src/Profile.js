@@ -152,10 +152,8 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
           data: {
-            username: "ym",
+            username: user.username,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
@@ -179,10 +177,8 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/edit",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
           data: {
-            username: "ym",
+            username: user.username,
             artworkID: id,
             artworkName: name,
             artworkDescription: desc,
@@ -205,9 +201,7 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/delete",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-          data: { username: "ym", artworkID: id },
+          data: { username: user.username, artworkID: id },
         }
       );
       setShowConfirmDelete(false);
