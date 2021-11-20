@@ -80,7 +80,7 @@ function Home() {
     axios({method:"POST", url:"http://localhost:1323/api/paintplz/v1/register",
       data:{name:artistName,surname:artistSurName,citizenID:artistcitizenID,
             email:artistEmail,username:artistUserName,password:artistPassword,
-            minimumPriceRate:artistMinPrice,maximumPriceRate:artistMaxPrice,
+            minimumPriceRate:int(artistMinPrice),maximumPriceRate:int(artistMaxPrice),
             biography:artistDesc,userType:true}})
     .then(function (response) {
       console.log(response);
@@ -141,8 +141,8 @@ function Home() {
     setArtistName("");
     setArtistEmail("");
     setArtistcitizenID("");
-    setArtistMinPrice("");
-    setArtistMaxPrice("");
+    setArtistMinPrice(0);
+    setArtistMaxPrice(0);
     setArtistDesc("");
   }
   function closeModal5() {
