@@ -8,12 +8,12 @@ import userPic from './user.png'
 import {AiOutlineSearch, AiOutlineInfoCircle , AiOutlineCheck} from 'react-icons/ai'
 import {HiHome} from 'react-icons/hi'
 import {MdBlock} from 'react-icons/md'
-
+import Cookies from "universal-cookie";
 
 function SearchScreen() {
   
-  const [result , setResult] = useState([4]) ; 
-  
+  const [result , setResult] = useState(null) ; 
+  const [profile , setProfile] = useState(null); 
   const [inputVal , setinputVal] = useState(''); 
   const [minVal , setMinVal] = useState(0); 
   const [maxVal , setMaxVal] = useState(0); 
@@ -28,20 +28,20 @@ function SearchScreen() {
   const [allTag , setTags] = useState([]); 
   const [tagsTest ,setTagsTest ]  = useState([]) ; 
 
-  const searchResult = [
-    {
-     "userID": "00000002",
-     "name" : "Zedong",
-     "surname" : "Mao",
-     "rating" : 5.0
-    },
-    {
-     "userID": "00000003",
-     "name" : "Vladimir",
-     "surname" : "Lenin",
-     "rating" : 5.0
-    }
- ]
+//   const searchResult = [
+//     {
+//      "userID": "00000002",
+//      "name" : "Zedong",
+//      "surname" : "Mao",
+//      "rating" : 5.0
+//     },
+//     {
+//      "userID": "00000003",
+//      "name" : "Vladimir",
+//      "surname" : "Lenin",
+//      "rating" : 5.0
+//     }
+//  ]
 
 
 
@@ -91,6 +91,9 @@ function SearchScreen() {
   
 useEffect(() => {
   getApiOfTag();
+  const cookies = new Cookies();
+  setProfile(cookies.get("currentUser"));
+  
 }, []);
 
   function getSearchResult(){
@@ -121,7 +124,7 @@ useEffect(() => {
     <div id = 'user-zone'>
       <div className = 'half-user' >
       <img className = 'user-profile' src= {userPic} alt = 'ym picture' width="24" height="24"/>
-      <text className = 'user-name'>Chawin Gowanit</text>
+      <text className = 'user-name'>{profile.name} {profile.surname}</text>
       </div>
       <div className = 'half-user'>
         <div className = 'home-button'>
@@ -316,7 +319,7 @@ useEffect(() => {
           <MdBlock style =  {{alignSelf : 'center'}} size = {64}/>Artist Not Found 
            
       </div>
-       :<ResultList list = {searchResult}/>}
+       :<ResultList list = {result}/>}
      
       
 
