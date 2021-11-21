@@ -3,9 +3,24 @@ import './ResultList.css'
 import userPic from '../user.png'
 import {AiFillEye , AiFillStar} from 'react-icons/ai'
 import {MdMessage} from 'react-icons/md'
+import Cookies from 'universal-cookie';
+
+
 // 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png' 
+
+
+
 const ResultList = ({list})=>  {
     
+
+    function redirect(item) {
+      const cookies = new Cookies();
+      console.log('ddd')
+      cookies.set("currentUser", item, { path: '/' });
+      window.location.replace("http://localhost:3000/profile")
+    }
+
+
     const listItems = list.map((item , index) =>
         <div className = 'indivInfo' style = {{backgroundColor : (index%2==0)? 'white': '#EAEAEA'}}>
           
@@ -24,10 +39,11 @@ const ResultList = ({list})=>  {
               </div>
           </div>
             <div className = 'half-sec half-sec-end' >
-            <button className = 'button' 
-              
-              
-            >View Profile<AiFillEye style = {{alignSelf : 'center' , marginLeft : 4}}/></button>
+            <button className = 'button' onClick = {()=> redirect(item) }>View Profile<AiFillEye style = {{alignSelf : 'center' , marginLeft : 4}}/></button>
+             
+             
+             
+             
              <button className = 'button button-end' onClick = {()=> console.log(5)}>Message<MdMessage style = {{alignSelf : 'center' , marginLeft : 4}}/></button>
            
             </div>

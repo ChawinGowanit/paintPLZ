@@ -178,7 +178,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: aqua; */
+    
+    
     
     
 }
@@ -251,7 +252,10 @@
 
 .text-add {
     width : 124px ; 
-    /* background-color: red; */
+    
+    
+    
+    
     
 }
 
