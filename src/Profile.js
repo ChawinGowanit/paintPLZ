@@ -160,6 +160,7 @@ const Profile = () => {
       setUploadTag([]);
       setUploaded(false);
       setUpload(false);
+      setActive(null);
       setShowCompleteUpload(true);
       getProfile(userID);
     } catch (err) {
