@@ -12,7 +12,7 @@ import {MdBlock} from 'react-icons/md'
 
 function SearchScreen() {
   
-  const [result , setResult] = useState([4]) ; 
+  const [result , setResult] = useState(null) ; 
   
   const [inputVal , setinputVal] = useState(''); 
   const [minVal , setMinVal] = useState(0); 
@@ -28,20 +28,20 @@ function SearchScreen() {
   const [allTag , setTags] = useState([]); 
   const [tagsTest ,setTagsTest ]  = useState([]) ; 
 
-  const searchResult = [
-    {
-     "userID": "00000002",
-     "name" : "Zedong",
-     "surname" : "Mao",
-     "rating" : 5.0
-    },
-    {
-     "userID": "00000003",
-     "name" : "Vladimir",
-     "surname" : "Lenin",
-     "rating" : 5.0
-    }
- ]
+//   const searchResult = [
+//     {
+//      "userID": "00000002",
+//      "name" : "Zedong",
+//      "surname" : "Mao",
+//      "rating" : 5.0
+//     },
+//     {
+//      "userID": "00000003",
+//      "name" : "Vladimir",
+//      "surname" : "Lenin",
+//      "rating" : 5.0
+//     }
+//  ]
 
 
 
@@ -316,7 +316,7 @@ useEffect(() => {
           <MdBlock style =  {{alignSelf : 'center'}} size = {64}/>Artist Not Found 
            
       </div>
-       :<ResultList list = {searchResult}/>}
+       :<ResultList list = {result}/>}
      
       
 
