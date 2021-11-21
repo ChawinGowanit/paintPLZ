@@ -26,7 +26,7 @@ const ResultList = ({list})=>  {
           
           <div className = 'half-sec' style = {{paddingLeft : 0}}>
               <div className = 'frame'>
-              <img style = {{borderRadius : 32}}src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png'  alt = 'ym picture' width="64" height="64"/>
+              <img style = {{borderRadius : 32}}src={userPic}  alt = 'ym picture' width="64" height="64"/>
 
               </div>
             
