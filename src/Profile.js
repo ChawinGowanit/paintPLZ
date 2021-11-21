@@ -63,7 +63,6 @@ const Profile = () => {
     getProfile(cookies.get("profileUser").userID);
     setIsOwner(cookies.get("profileUser").userID === cookies.get("currentUser").userID);
     getApiOfTag();
-    //getMongo();
   }, []);
 
   function removeFromEditTag(text) {
@@ -121,25 +120,12 @@ const Profile = () => {
         console.log("Response:", res);
         setUser(res.data);
         setArtwork(res.data.artworks);
+        setMongoArtwork(res.data.mongoartworks);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-
-  const getMongo = async (id) => {
-    const endpoint =
-      "http://localhost:1323/api/paintplz/v1/artist_profile/mongooo" + id;
-    axios({ method: "GET", url: endpoint })
-      .then(function (res) {
-        console.log("Response:", res);
-        setMongoArtwork(res.data.artworks);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
 
   const onClickUpload = () => {
     setUpload(true);
@@ -160,6 +146,7 @@ const Profile = () => {
           method: "POST",
           data: {
             userID: user.userID,
+            mongo : false,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
@@ -182,11 +169,12 @@ const Profile = () => {
   const confirmUploadMongo = async (name, desc, tag, url) => {
     try {
       const res = await axios(
-        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload/mongo",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload",
         {
           method: "POST",
           data: {
             userID: user.userID,
+            mongo : true,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
@@ -201,7 +189,6 @@ const Profile = () => {
       setUpload(false);
       setShowCompleteUpload(true);
       getProfile(userID);
-      getMongo(userID);
     } catch (err) {
       throw err;
     }
