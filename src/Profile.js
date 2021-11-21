@@ -53,7 +53,7 @@ const Profile = () => {
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [isOwner, setIsOwner] = useState(true);
   const [userID, setUserID] = useState(null);
 
@@ -61,7 +61,9 @@ const Profile = () => {
     const cookies = new Cookies();
     setUserID(cookies.get("profileUser").userID);
     getProfile(cookies.get("profileUser").userID);
-    setIsOwner(cookies.get("profileUser").userID === cookies.get("currentUser").userID);
+    setIsOwner(
+      cookies.get("profileUser").userID === cookies.get("currentUser").userID
+    );
     getApiOfTag();
   }, []);
 
@@ -192,7 +194,6 @@ const Profile = () => {
     }
   };
 
-
   const confirmEdit = async (id, name, desc, tag, url) => {
     try {
       const res = await axios(
@@ -256,7 +257,7 @@ const Profile = () => {
       {user && (
         <Content
           style={{
-            margin: "20vw",
+            margin: "10vw",
             padding: 25,
             backgroundColor: "white",
             fontFamily: "Asap",
@@ -414,15 +415,16 @@ const Profile = () => {
                   </Col>
                   {artwork.length == 0 ? (
                     <Col span={24}>
-                    <span
-                      style={{
-                        fontSize: 15,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      No artwork uploaded yet :({" "}
-                    </span></Col>
+                      <span
+                        style={{
+                          fontSize: 15,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        No artwork uploaded yet :({" "}
+                      </span>
+                    </Col>
                   ) : (
                     <Col
                       span={24}
@@ -447,15 +449,16 @@ const Profile = () => {
                   </Col>
                   {mongoArtwork.length == 0 ? (
                     <Col span={24}>
-                    <span
-                      style={{
-                        fontSize: 15,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      No artwork uploaded yet :({" "}
-                    </span></Col>
+                      <span
+                        style={{
+                          fontSize: 15,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        No artwork uploaded yet :({" "}
+                      </span>
+                    </Col>
                   ) : (
                     <Col
                       span={24}
@@ -472,7 +475,6 @@ const Profile = () => {
                     </Col>
                   )}
                 </Row>
-
               </TabPane>
 
               <TabPane tab="Artwork" key="2" disabled>
@@ -564,7 +566,7 @@ const Profile = () => {
                 )}
               </Upload>
               <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
-              <Button
+                <Button
                   type="round"
                   style={{
                     height: 32,
@@ -575,7 +577,12 @@ const Profile = () => {
                     border: "none",
                   }}
                   onClick={() =>
-                    confirmUploadMongo(uploadName, uploadDesc, uploadTag, uploadUrl)
+                    confirmUploadMongo(
+                      uploadName,
+                      uploadDesc,
+                      uploadTag,
+                      uploadUrl
+                    )
                   }
                 >
                   Submit to Mongo <CheckOutlined />
@@ -905,7 +912,6 @@ const Profile = () => {
                   Submit <CheckOutlined />
                 </Button>
               </Row>
-
               <Modal
                 centered
                 onCancel={() => setShowConfirmEdit(false)}
@@ -946,7 +952,7 @@ const Profile = () => {
                         border: "none",
                       }}
                       onClick={() => {
-                        //setShowConfirmEdit(false);
+                        setShowConfirmEdit(false);
                         confirmEdit(
                           active.artworkID,
                           editName,
@@ -961,8 +967,6 @@ const Profile = () => {
                   </Col>
                 </Row>
               </Modal>
-
-
               <Modal
                 centered
                 onCancel={() => setShowCompleteEdit(false)}
