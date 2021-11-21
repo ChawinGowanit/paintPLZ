@@ -92,7 +92,7 @@ function SearchScreen() {
 useEffect(() => {
   getApiOfTag();
   const cookies = new Cookies();
-  setProfile(cookies.get("currentUser"));
+  setProfile(cookies.get("currentUser").name);
   
 }, []);
 
@@ -124,7 +124,7 @@ useEffect(() => {
     <div id = 'user-zone'>
       <div className = 'half-user' >
       <img className = 'user-profile' src= {userPic} alt = 'ym picture' width="24" height="24"/>
-      <text className = 'user-name'>{profile.name} {profile.surname}</text>
+      <text className = 'user-name'>{profile}</text>
       </div>
       <div className = 'half-user'>
         <div className = 'home-button'>
