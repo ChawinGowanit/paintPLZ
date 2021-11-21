@@ -175,7 +175,7 @@ const Profile = () => {
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-           // artworkUrl: "image 1.png",
+            artworkUrl: url,
           },
         }
       );
@@ -868,7 +868,7 @@ const Profile = () => {
                           editName,
                           editDesc,
                           editTag,
-                          editUrl
+                          active.url
                         )
                       }
                     >
