@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import './ResultList.css'
-
-
-const ResultList = ()=>  {
-    const numbers = [1, 2, 3, 4 , 5 , 6 , 7 , 8 , 9, 100 ];
-    const listItems = numbers.map((numbers , index) =>
+import userPic from '../user.png'
+// 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png' 
+const ResultList = ({list})=>  {
+    
+    const listItems = list.map((item , index) =>
         <div className = 'indivInfo' style = {{backgroundColor : (index%2==1)? 'white': '#EAEAEA'}}>
           
           <div className = 'half-sec' style = {{paddingLeft : 0}}>
               <div className = 'frame'>
-              <img src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png' alt = 'ym picture' width="64" height="64"/>
+              <img style = {{borderRadius : 32}}src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png'  alt = 'ym picture' width="64" height="64"/>
 
               </div>
             
               
               <div className = 'nameandrating'>
-                  <text>Chawin Gowanit</text>
-                  <text>4.85</text>
+                  <text>{item.name} {item.surname}</text>
+                  <text>{item.rating}</text>
               </div>
           </div>
             <div className = 'half-sec half-sec-end' >

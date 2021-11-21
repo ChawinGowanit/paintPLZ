@@ -9,16 +9,12 @@
 
 }
 
-.circle {
-    width : 64px ; 
-    height : 64px;
-    
-        
-    
-}
 
 .frame {
     margin-left: 16px;
+    border-radius: 32px;
+    background-color: aqua;
+    
 }
 
 .half-sec {

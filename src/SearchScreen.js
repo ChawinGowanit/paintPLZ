@@ -7,7 +7,7 @@ import logo from './logo.png'
 import userPic from './user.png'
 function SearchScreen() {
   
-  const [result , setResult] = useState('a') ; 
+  const [result , setResult] = useState(null) ; 
   
   const [inputVal , setinputVal] = useState(''); 
   const [minVal , setMinVal] = useState(0); 
@@ -22,32 +22,22 @@ function SearchScreen() {
   
   const [allTag , setTags] = useState([]); 
   const [tagsTest ,setTagsTest ]  = useState([]) ; 
-  
-// const allTag = 
-// [{"tagID" : "917ea4ef-5770-4fd5-9d2c-1a3a346f1c50","tagName" : "2d"}
-// ,{"tagID" : "a91530b6-2f49-447b-84a7-9137f9853213","tagName" : "character design"},
-// ,{"tagID" : "9faf83d2-325e-45f3-9827-d02b4d954690","tagName" : "3d"},
-// ,{"tagID" : "b2e323fc-97db-43c9-9c97-76fdc5fdda01","tagName" : "4d"},
-// ,{"tagID" : "d046c9c3-ba55-44ff-b7f8-56ec0b5943fb","tagName" : "background"},
-// ,{"tagID" : "ba48f4ff-84f7-486b-aad4-dbeb682e20bc","tagName" : "fantasy"},
-// ,{"tagID" : "2609aaf5-2563-4024-acee-951e2476b49c","tagName" : "comics"},
-// ,{"tagID" : "b3c04852-04b7-4abb-be33-b74f09f195f8","tagName" : "fan art"},
-// ,{"tagID" : "c71a0599-090a-48d4-9c86-afd770d879ff","tagName" : "fractal"},
-// ,{"tagID" : "087ed5d2-7163-444b-bbee-51274e129f9b","tagName" : "horror"},
-// ,{"tagID" : "04472b39-1aac-4600-a58e-af3c42d8dd55","tagName" : "pixel art"},
-// ,{"tagID" : "ee235e7b-4f9e-4ace-bfcc-5b6cd1a8254e","tagName" : "wallpaper"},
-// ,{"tagID" : "45ce62f2-10a5-47da-9171-59ef56cb78ab","tagName" : "vector"},
-// ,{"tagID" : "bcf96918-8193-4aaf-8692-f01d1c2d4505","tagName" : "emoji"},
-// ,{"tagID" : "223d2e48-647f-47c3-a9d3-f0a19b68e07f","tagName" : "dog"},
-// ,{"tagID" : "4517917a-af12-48bc-955f-064fa2ea0730","tagName" : "cat"},
-// ,{"tagID" : "3e18565f-bcd4-4429-8df5-5438487d28f1","tagName" : "rainbow"},
-// ,{"tagID" : "427733b9-3de2-47d0-8e6a-7a0fd91e3613","tagName" : "space"},
-// ,{"tagID" : "b6ce9b0d-4ef5-4192-8275-01941658f764","tagName" : "scenery"},
-// ,{"tagID" : "730c136c-2971-4451-8734-443408f912dc","tagName" : "room layout"},
-// ,{"tagID" : "aa9e214c-f598-4341-a382-7b4894737291","tagName" : "oriental"},
-// ,{"tagID" : "d38bdd24-1e5a-4923-a66b-d8098a5e8cf0","tagName" : "realism"},
-// ,{"tagID" : "3ae2f4fe-f122-4dff-8a46-3ed06fec9104","tagName" : "abstract"}]
-  
+
+  const searchResult = [
+    {
+     "userID": "00000002",
+     "name" : "Zedong",
+     "surname" : "Mao",
+     "rating" : 5.0
+    },
+    {
+     "userID": "00000003",
+     "name" : "Vladimir",
+     "surname" : "Lenin",
+     "rating" : 5.0
+    }
+ ]
+
 
 
 
@@ -98,6 +88,7 @@ useEffect(() => {
             }})
     .then(function (response) {
       console.log(response);
+      setResult(response.data.searchResult)
       
     })
     .catch(function (error) {
@@ -300,7 +291,7 @@ useEffect(() => {
 
 
     <div style={{display:'flex',justifyContent:"center"}}>
-    {result.includes('a')  ? 
+    {result !==null  ? 
     
     <div id = 'result-pane'>
       <div id = 'header'>
@@ -308,11 +299,11 @@ useEffect(() => {
           
       </div>
       
-      {result=='aa'?  <div id  = 'notfound-result-pane' >
+      {result.length === 0 ?  <div id  = 'notfound-result-pane' >
           Artist Not Found 
            
       </div>
-       :<ResultList />}
+       :<ResultList list = {result}/>}
      
       
 

@@ -6,6 +6,7 @@
     background-size: cover !important;
     display: flex;
     flex-direction: column;
+    height : 100vh; 
     
 
 }
