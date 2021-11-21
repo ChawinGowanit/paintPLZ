@@ -257,7 +257,7 @@ const Profile = () => {
             </Col>
             <Col>
               <Row>
-                {isOwner ? (
+                { !isOwner ? (
                   <Fragment>
                     <Col>
                       <Row>
@@ -280,6 +280,8 @@ const Profile = () => {
                             color: "white",
                             background: "#A44CD7",
                             minWidth: 120,
+                            marginTop:10,
+                            width : "100%",
                             border: "none",
                           }}
                         >
@@ -616,7 +618,7 @@ const Profile = () => {
                 })}
               </Row>
 
-              <Row justify="end">
+             { isOwner && <Row justify="end">
                 <Button
                   type="round"
                   style={{
@@ -647,7 +649,7 @@ const Profile = () => {
                 >
                   Delete <DeleteOutlined />
                 </Button>
-              </Row>
+              </Row> }
 
               <Modal
                 centered
