@@ -39,10 +39,10 @@ const Profile = () => {
   const [showCompleteUpload, setShowCompleteUpload] = useState(false);
   const [editName, setEditName] = useState(null);
   const [editDesc, setEditDesc] = useState(null);
-  const [editTag, setEditTag] = useState(null);
+  const [editTag, setEditTag] = useState([]);
   const [editUrl, setEditUrl] = useState(null);
   const [uploadName, setUploadName] = useState(null);
-  const [tags, setTags] = useState(null);
+  const [tags, setTags] = useState([]);
   const [uploaded, setUploaded] = useState(false);
   const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
@@ -50,7 +50,7 @@ const Profile = () => {
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -126,6 +126,8 @@ const Profile = () => {
   const onclickPic = (props) => {
     setActive(props);
     setEditTag(props.artTag);
+    setEditDesc(props.description);
+    setEditName(props.title);
   };
 
   const confirmUpload = async (name, desc, tag, url) => {
@@ -139,13 +141,13 @@ const Profile = () => {
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-            artworkUrl: "Artwork.png",
+            artworkUrl: "image 1.png",
           },
         }
       );
       setUploadDesc(null);
       setUploadName(null);
-      setUploadTag(null);
+      setUploadTag([]);
       setUploaded(false);
       setUpload(false);
       setShowCompleteUpload(true);
@@ -702,12 +704,14 @@ const Profile = () => {
                 style={{ marginBottom: 5 }}
                 placeholder={active.title}
                 onChange={onChangeEditName}
+                value={editName}
               />
               Artwork Description
               <Input
                 style={{ marginBottom: 5 }}
                 placeholder={active.description}
                 onChange={onChangeEditDesc}
+                value={editDesc}
               />
               Artwork Tag{" "}
               <Input
