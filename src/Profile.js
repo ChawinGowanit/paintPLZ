@@ -630,7 +630,9 @@ const Profile = () => {
                       border: "none",
                     }}
                     onClick={() => {
+                      setActive(null);
                       setShowCompleteUpload(false);
+                     
                       //setShowConfirmUpload(false);
                     }}
                   >
