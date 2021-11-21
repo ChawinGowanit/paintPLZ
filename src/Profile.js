@@ -20,6 +20,8 @@ import {
   CloseCircleOutlined,
   CheckOutlined,
   UploadOutlined,
+  MessageOutlined,
+  FormOutlined
 } from "@ant-design/icons";
 import Cookies from "universal-cookie";
 
@@ -51,10 +53,12 @@ const Profile = () => {
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
   const [user, setUser] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const cookies = new Cookies();
-    getProfile(cookies.get("currentUser").userID);
+    getProfile(cookies.get("profileUser").userID);
+    setIsOwner(cookies.get("profileUser") === cookies.get("currentUser"));
     getApiOfTag();
   }, []);
 
@@ -250,18 +254,51 @@ const Profile = () => {
             </Col>
             <Col>
               <Row>
-                <Button
-                  shape="round"
-                  style={{
-                    color: "white",
-                    background: "#A44CD7",
-                    minWidth: 120,
-                    border: "none",
-                  }}
-                  onClick={onClickUpload}
-                >
-                  Upload new artwork <UploadOutlined />
-                </Button>
+                {isOwner ? (
+                  <Fragment>
+                    <Col>
+                      <Row>
+                        <Button
+                          shape="round"
+                          style={{
+                            color: "white",
+                            background: "#A44CD7",
+                            minWidth: 120,
+                            border: "none",
+                          }}
+                        >
+                          Send Hiring Request <FormOutlined />
+                        </Button>
+                      </Row>
+                      <Row>
+                        <Button
+                          shape="round"
+                          style={{
+                            color: "white",
+                            background: "#A44CD7",
+                            minWidth: 120,
+                            border: "none",
+                          }}
+                        >
+                          Message <MessageOutlined />
+                        </Button>
+                      </Row>
+                    </Col>
+                  </Fragment>
+                ) : (
+                  <Button
+                    shape="round"
+                    style={{
+                      color: "white",
+                      background: "#A44CD7",
+                      minWidth: 120,
+                      border: "none",
+                    }}
+                    onClick={onClickUpload}
+                  >
+                    Upload new artwork <UploadOutlined />
+                  </Button>
+                )}
               </Row>
             </Col>
           </Row>
@@ -373,8 +410,7 @@ const Profile = () => {
                 Artwork
               </TabPane>
 
-              <TabPane tab="Gallery" key="3" disabled>
-              </TabPane>
+              <TabPane tab="Gallery" key="3" disabled></TabPane>
             </Tabs>
           </Row>
 
@@ -439,7 +475,10 @@ const Profile = () => {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                style={{ backgroundColor: uploaded ? "red":"green", alignSelf: "center" }}
+                style={{
+                  backgroundColor: uploaded ? "red" : "green",
+                  alignSelf: "center",
+                }}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 //beforeUpload={beforeUpload}
                 onChange={() => setUploaded(true)}
@@ -449,7 +488,11 @@ const Profile = () => {
             ) : (
               uploadButton
             )} */}
-                {uploaded ? <span>File Uploaded</span> : <span>Upload artwork </span>}
+                {uploaded ? (
+                  <span>File Uploaded</span>
+                ) : (
+                  <span>Upload artwork </span>
+                )}
               </Upload>
               <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
                 <Button
