@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import {
   Layout,
-  Menu,
   Input,
   Typography,
   Button,
@@ -11,7 +10,6 @@ import {
   Checkbox,
 } from "antd";
 import { Row, Col, Tabs } from "antd";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./profile.css";
 import axios from "axios";
@@ -20,6 +18,7 @@ import {
   EditOutlined,
   EyeOutlined,
   CloseCircleOutlined,
+  CheckOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import Cookies from "universal-cookie";
@@ -37,12 +36,14 @@ const Profile = () => {
   const [showConfirmEdit, setShowConfirmEdit] = useState(false);
   const [showCompleteDelete, setShowCompleteDelete] = useState(false);
   const [showCompleteEdit, setShowCompleteEdit] = useState(false);
+  const [showCompleteUpload, setShowCompleteUpload] = useState(false);
   const [editName, setEditName] = useState(null);
   const [editDesc, setEditDesc] = useState(null);
-  const [editTag, setEditTag] = useState(null);
+  const [editTag, setEditTag] = useState([]);
   const [editUrl, setEditUrl] = useState(null);
   const [uploadName, setUploadName] = useState(null);
-  //const [tags, setTags] = useState(null);
+  const [tags, setTags] = useState([]);
+  const [uploaded, setUploaded] = useState(false);
   const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
   const [uploadTag, setUploadTag] = useState([]);
@@ -51,59 +52,10 @@ const Profile = () => {
   const [active, setActive] = useState(null);
   const [user, setUser] = useState(null);
 
-  const tags = [
-    { tagID: "917ea4ef-5770-4fd5-9d2c-1a3a346f1c50", tagName: "2d" },
-    {
-      tagID: "a91530b6-2f49-447b-84a7-9137f9853213",
-      tagName: "character design",
-    },
-    { tagID: "9faf83d2-325e-45f3-9827-d02b4d954690", tagName: "3d" },
-    ,
-    { tagID: "b2e323fc-97db-43c9-9c97-76fdc5fdda01", tagName: "4d" },
-    ,
-    { tagID: "d046c9c3-ba55-44ff-b7f8-56ec0b5943fb", tagName: "background" },
-    ,
-    { tagID: "ba48f4ff-84f7-486b-aad4-dbeb682e20bc", tagName: "fantasy" },
-    ,
-    { tagID: "2609aaf5-2563-4024-acee-951e2476b49c", tagName: "comics" },
-    ,
-    { tagID: "b3c04852-04b7-4abb-be33-b74f09f195f8", tagName: "fan art" },
-    ,
-    { tagID: "c71a0599-090a-48d4-9c86-afd770d879ff", tagName: "fractal" },
-    ,
-    { tagID: "087ed5d2-7163-444b-bbee-51274e129f9b", tagName: "horror" },
-    ,
-    { tagID: "04472b39-1aac-4600-a58e-af3c42d8dd55", tagName: "pixel art" },
-    ,
-    { tagID: "ee235e7b-4f9e-4ace-bfcc-5b6cd1a8254e", tagName: "wallpaper" },
-    ,
-    { tagID: "45ce62f2-10a5-47da-9171-59ef56cb78ab", tagName: "vector" },
-    ,
-    { tagID: "bcf96918-8193-4aaf-8692-f01d1c2d4505", tagName: "emoji" },
-    ,
-    { tagID: "223d2e48-647f-47c3-a9d3-f0a19b68e07f", tagName: "dog" },
-    ,
-    { tagID: "4517917a-af12-48bc-955f-064fa2ea0730", tagName: "cat" },
-    ,
-    { tagID: "3e18565f-bcd4-4429-8df5-5438487d28f1", tagName: "rainbow" },
-    ,
-    { tagID: "427733b9-3de2-47d0-8e6a-7a0fd91e3613", tagName: "space" },
-    ,
-    { tagID: "b6ce9b0d-4ef5-4192-8275-01941658f764", tagName: "scenery" },
-    ,
-    { tagID: "730c136c-2971-4451-8734-443408f912dc", tagName: "room layout" },
-    ,
-    { tagID: "aa9e214c-f598-4341-a382-7b4894737291", tagName: "oriental" },
-    ,
-    { tagID: "d38bdd24-1e5a-4923-a66b-d8098a5e8cf0", tagName: "realism" },
-    ,
-    { tagID: "3ae2f4fe-f122-4dff-8a46-3ed06fec9104", tagName: "abstract" },
-  ];
-
   useEffect(() => {
     const cookies = new Cookies();
     getProfile(cookies.get("currentUser").userID);
- //   getApiOfTag();
+    getApiOfTag();
   }, []);
 
   function removeFromEditTag(text) {
@@ -132,7 +84,7 @@ const Profile = () => {
     axios({ method: "GET", url: "http://localhost:1323/api/paintplz/v1/tags" })
       .then(function (response) {
         console.log(response);
-     //   setTags(response.data.tags);
+        setTags(response.data.tags);
       })
       .catch(function (error) {
         console.log(error);
@@ -147,7 +99,7 @@ const Profile = () => {
       let result = [];
       console.log(value);
       result = tags.filter((data) => {
-        return data.search(value) != -1;
+        return data.tagName.includes(value);
       });
       setSearchedTags(result);
     }
@@ -167,25 +119,6 @@ const Profile = () => {
       });
   };
 
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 3,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
   const onClickUpload = () => {
     setUpload(true);
   };
@@ -193,6 +126,8 @@ const Profile = () => {
   const onclickPic = (props) => {
     setActive(props);
     setEditTag(props.artTag);
+    setEditDesc(props.description);
+    setEditName(props.title);
   };
 
   const confirmUpload = async (name, desc, tag, url) => {
@@ -201,21 +136,21 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
           data: {
-            username: "ym",
+            userID: user.userID,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-            artworkUrl: "Artwork.png",
+            artworkUrl: "image 1.png",
           },
         }
       );
       setUploadDesc(null);
       setUploadName(null);
-      setUploadTag(null);
+      setUploadTag([]);
+      setUploaded(false);
       setUpload(false);
+      setShowCompleteUpload(true);
       getProfile(user.username);
     } catch (err) {
       throw err;
@@ -228,10 +163,8 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/edit",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
           data: {
-            username: "ym",
+            userID: user.userID,
             artworkID: id,
             artworkName: name,
             artworkDescription: desc,
@@ -254,9 +187,7 @@ const Profile = () => {
         "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/delete",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-          data: { username: "ym", artworkID: id },
+          data: { userID: user.userID, artworkID: id },
         }
       );
       setShowConfirmDelete(false);
@@ -284,7 +215,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout className="bg">
+    <Layout className="bgn">
       {user && (
         <Content
           style={{
@@ -341,7 +272,7 @@ const Profile = () => {
                 Biography
               </Row>
               <Row style={{ fontSize: 16, color: "gray" }}>
-                {user.Biography}
+                {user.biography}
               </Row>
             </Col>
           </Row>
@@ -369,7 +300,11 @@ const Profile = () => {
                     </Row>
                   </Col>
                   <Col>
-                    <Rate count={5} disabled defaultValue={5} />
+                    <Rate
+                      count={5}
+                      disabled
+                      defaultValue={Math.round(user.rating)}
+                    />
                   </Col>
                 </Row>
 
@@ -396,57 +331,41 @@ const Profile = () => {
                       }}
                     >
                       {" "}
-                      $100 - $2000
+                      ${user.minimumPriceRate} - ${user.maximumPriceRate}
                     </Text>
                   </Col>
                 </Row>
 
                 <Row style={{ marginTop: 15 }}>
-                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
+                  <Col style={{ fontSize: 20, fontWeight: "bold", width: 150 }}>
                     My Work
-                    <Carousel
-                      responsive={responsive}
-                      arrows={false}
-                      swipeable={true}
-                      partialVisibile={true}
+                  </Col>
+                  {artwork.length == 0 ? (
+                    <span
+                      style={{
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      No artwork uploaded yet :({" "}
+                    </span>
+                  ) : (
+                    <Col
+                      span={24}
+                      style={{ overflowX: "scroll", whiteSpace: "nowrap" }}
                     >
                       {artwork.map((a) => {
                         return (
-                          <div
+                          <img
                             onClick={() => onclickPic(a)}
-                            style={{ marginRight: 10 }}
-                          >
-                            <img style={{ maxHeight: 167 }} src={a.url} />
-                          </div>
+                            style={{ maxHeight: 167, marginRight: 20 }}
+                            src={a.url}
+                          />
                         );
                       })}
-                    </Carousel>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: 15 }}>
-                  <Col style={{ fontSize: 20, fontWeight: "bold" }}>
-                    My Gallery
-                    <Carousel
-                      responsive={responsive}
-                      arrows={false}
-                      swipeable={true}
-                      partialVisible={true}
-                    >
-                      <div style={{ background: "" }}>
-                        <img src="./image 1.png" />
-                      </div>
-
-                      <div>
-                        <img src="./Artwork.png" />
-                      </div>
-                      <div>
-                        <img height="167" src="./artwork2.jpg" />
-                      </div>
-                      <div>
-                        <img height="167" src="./artwork2.jpg" />
-                      </div>
-                    </Carousel>
-                  </Col>
+                    </Col>
+                  )}
                 </Row>
               </TabPane>
 
@@ -455,12 +374,6 @@ const Profile = () => {
               </TabPane>
 
               <TabPane tab="Gallery" key="3" disabled>
-                <Carousel responsive={responsive} arrows={false}>
-                  <div>Item 1</div>
-                  <div>Item 2</div>
-                  <div>Item 3</div>
-                  <div>Item 4</div>
-                </Carousel>
               </TabPane>
             </Tabs>
           </Row>
@@ -475,6 +388,7 @@ const Profile = () => {
               setUploadDesc(null);
               setUploadTag([]);
               setUploadName(null);
+              setUploaded(false);
             }}
           >
             Artwork Name
@@ -525,17 +439,17 @@ const Profile = () => {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                style={{ background: "green", alignSelf: "center" }}
+                style={{ backgroundColor: uploaded ? "red":"green", alignSelf: "center" }}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 //beforeUpload={beforeUpload}
-                //onChange={this.handleChange}
+                onChange={() => setUploaded(true)}
               >
                 {/* {imageUrl ? (
               <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
               uploadButton
             )} */}
-                Upload artwork
+                {uploaded ? <span>File Uploaded</span> : <span>Upload artwork </span>}
               </Upload>
               <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
                 <Button
@@ -552,10 +466,43 @@ const Profile = () => {
                     confirmUpload(uploadName, uploadDesc, uploadTag, uploadUrl)
                   }
                 >
-                  Submit <EditOutlined />
+                  Submit <CheckOutlined />
                 </Button>
               </Row>
             </Row>
+            <Modal
+              centered
+              onCancel={() => setShowCompleteUpload(false)}
+              visible={showCompleteUpload}
+              title="Upload Completed"
+              footer={null}
+            >
+              <Row
+                style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
+              >
+                Artwork has been uploaded.
+              </Row>
+
+              <Row style={{ width: "100%", marginTop: 25 }}>
+                <Col span={24}>
+                  <Button
+                    type="round"
+                    style={{
+                      width: "95%",
+                      color: "white",
+                      background: "#4CD75F",
+                      border: "none",
+                    }}
+                    onClick={() => {
+                      setShowCompleteUpload(false);
+                      //setShowConfirmUpload(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Col>
+              </Row>
+            </Modal>
           </Modal>
 
           {active && (
@@ -757,12 +704,14 @@ const Profile = () => {
                 style={{ marginBottom: 5 }}
                 placeholder={active.title}
                 onChange={onChangeEditName}
+                value={editName}
               />
               Artwork Description
               <Input
                 style={{ marginBottom: 5 }}
                 placeholder={active.description}
                 onChange={onChangeEditDesc}
+                value={editDesc}
               />
               Artwork Tag{" "}
               <Input
@@ -823,7 +772,7 @@ const Profile = () => {
                   }}
                   onClick={() => setShowConfirmEdit(true)}
                 >
-                  Submit
+                  Submit <CheckOutlined />
                 </Button>
               </Row>
               <Modal

@@ -1,5 +1,5 @@
 .container{
-    min-width: 82px;
+    
     height : 20px ; 
     background-color: #4CD75F;
     
@@ -11,12 +11,14 @@
     font-size: 12px;
     font-weight: 400;
     border: none;
+    flex-direction: row;
+    display: flex;
     
 }
 
 .circle {
     
-    background-color: red;
+    
     width: 10px;
     height : 10px;
     border-radius: 5px;
@@ -25,8 +27,8 @@
     align-content: flex-end;
     text-align: center;
     flex-direction: row;
-    margin-left: -5px;
-    
+    align-self: center;
+    margin-left: 4px;
     
     
 }

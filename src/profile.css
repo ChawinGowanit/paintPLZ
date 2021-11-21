@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 
-.bg {
+.bgn {
     background-image: url('./bg1.png') !important;
     background-size: cover !important;
 }

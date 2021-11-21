@@ -10,10 +10,13 @@ function CatagoryItem({text , func}) {
             <button className = 'container' style = {{backgroundColor : '#4CD75F'}}
             type = 'button'
             
-            >{text}</button>
+            >{text}   
             <div className = 'circle' onClick = {()=> func(text)}>
-                <ImCross style = {{ alignSelf : 'center'}}size = {6}/>
+                <ImCross style = {{ alignSelf : 'center' }}size = {6}/>
             </div>
+            
+             </button>
+            
             
            
         </div>
