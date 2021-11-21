@@ -21,7 +21,7 @@ import {
   CheckOutlined,
   UploadOutlined,
   MessageOutlined,
-  FormOutlined
+  FormOutlined,
 } from "@ant-design/icons";
 import Cookies from "universal-cookie";
 
@@ -49,11 +49,12 @@ const Profile = () => {
   const [searchedTags, setSearchedTags] = useState([]);
   const [uploadDesc, setUploadDesc] = useState(null);
   const [uploadTag, setUploadTag] = useState([]);
+  const [mongoArtwork, setMongoArtwork] = useState([]);
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
-  const [user, setUser] = useState(null);
-  const [isOwner, setIsOwner] = useState(false);
+  const [user, setUser] = useState();
+  const [isOwner, setIsOwner] = useState(true);
   const [userID, setUserID] = useState(null);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const Profile = () => {
     getProfile(cookies.get("profileUser").userID);
     setIsOwner(cookies.get("profileUser").userID === cookies.get("currentUser").userID);
     getApiOfTag();
+    //getMongo();
   }, []);
 
   function removeFromEditTag(text) {
@@ -125,6 +127,20 @@ const Profile = () => {
       });
   };
 
+  const getMongo = async (id) => {
+    const endpoint =
+      "http://localhost:1323/api/paintplz/v1/artist_profile/mongooo" + id;
+    axios({ method: "GET", url: endpoint })
+      .then(function (res) {
+        console.log("Response:", res);
+        setMongoArtwork(res.data.artworks);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+
   const onClickUpload = () => {
     setUpload(true);
   };
@@ -163,6 +179,35 @@ const Profile = () => {
     }
   };
 
+  const confirmUploadMongo = async (name, desc, tag, url) => {
+    try {
+      const res = await axios(
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload/mongo",
+        {
+          method: "POST",
+          data: {
+            userID: user.userID,
+            artworkName: name,
+            artworkDescription: desc,
+            artTag: tag,
+            artworkUrl: "image 1.png",
+          },
+        }
+      );
+      setUploadDesc(null);
+      setUploadName(null);
+      setUploadTag([]);
+      setUploaded(false);
+      setUpload(false);
+      setShowCompleteUpload(true);
+      getProfile(userID);
+      getMongo(userID);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+
   const confirmEdit = async (id, name, desc, tag, url) => {
     try {
       const res = await axios(
@@ -199,7 +244,6 @@ const Profile = () => {
       );
       setShowConfirmDelete(false);
       setShowCompleteDelete(true);
-
       getProfile(userID);
     } catch (err) {
       throw err;
@@ -258,7 +302,7 @@ const Profile = () => {
             </Col>
             <Col>
               <Row>
-                { !isOwner ? (
+                {!isOwner ? (
                   <Fragment>
                     <Col>
                       <Row>
@@ -281,8 +325,8 @@ const Profile = () => {
                             color: "white",
                             background: "#A44CD7",
                             minWidth: 120,
-                            marginTop:10,
-                            width : "100%",
+                            marginTop: 10,
+                            width: "100%",
                             border: "none",
                           }}
                         >
@@ -384,6 +428,7 @@ const Profile = () => {
                     My Work
                   </Col>
                   {artwork.length == 0 ? (
+                    <Col span={24}>
                     <span
                       style={{
                         fontSize: 15,
@@ -392,7 +437,7 @@ const Profile = () => {
                       }}
                     >
                       No artwork uploaded yet :({" "}
-                    </span>
+                    </span></Col>
                   ) : (
                     <Col
                       span={24}
@@ -410,6 +455,39 @@ const Profile = () => {
                     </Col>
                   )}
                 </Row>
+
+                <Row style={{ marginTop: 15 }}>
+                  <Col style={{ fontSize: 20, fontWeight: "bold", width: 150 }}>
+                    My Mongo Work
+                  </Col>
+                  {mongoArtwork.length == 0 ? (
+                    <Col span={24}>
+                    <span
+                      style={{
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      No artwork uploaded yet :({" "}
+                    </span></Col>
+                  ) : (
+                    <Col
+                      span={24}
+                      style={{ overflowX: "scroll", whiteSpace: "nowrap" }}
+                    >
+                      {mongoArtwork.map((a) => {
+                        return (
+                          <img
+                            style={{ maxHeight: 167, marginRight: 20 }}
+                            src={a.url}
+                          />
+                        );
+                      })}
+                    </Col>
+                  )}
+                </Row>
+
               </TabPane>
 
               <TabPane tab="Artwork" key="2" disabled>
@@ -501,6 +579,22 @@ const Profile = () => {
                 )}
               </Upload>
               <Row justify="end" style={{ width: "100%", marginTop: 10 }}>
+              <Button
+                  type="round"
+                  style={{
+                    height: 32,
+                    color: "white",
+                    background: "#4CD75F",
+                    minWidth: 45,
+                    marginRight: 5,
+                    border: "none",
+                  }}
+                  onClick={() =>
+                    confirmUploadMongo(uploadName, uploadDesc, uploadTag, uploadUrl)
+                  }
+                >
+                  Submit to Mongo <CheckOutlined />
+                </Button>
                 <Button
                   type="round"
                   style={{
@@ -619,38 +713,40 @@ const Profile = () => {
                 })}
               </Row>
 
-             { isOwner && <Row justify="end">
-                <Button
-                  type="round"
-                  style={{
-                    height: 32,
-                    color: "white",
-                    background: "#4CD75F",
-                    minWidth: 45,
-                    marginRight: 5,
-                    border: "none",
-                  }}
-                  onClick={() => {
-                    console.log("active.artTag");
-                    setEdit(true);
-                  }}
-                >
-                  Edit <EditOutlined />
-                </Button>
-                <Button
-                  type="round"
-                  style={{
-                    height: 32,
-                    color: "white",
-                    background: "#D74C7F",
-                    minWidth: 45,
-                    border: "none",
-                  }}
-                  onClick={() => setShowConfirmDelete(true)}
-                >
-                  Delete <DeleteOutlined />
-                </Button>
-              </Row> }
+              {isOwner && (
+                <Row justify="end">
+                  <Button
+                    type="round"
+                    style={{
+                      height: 32,
+                      color: "white",
+                      background: "#4CD75F",
+                      minWidth: 45,
+                      marginRight: 5,
+                      border: "none",
+                    }}
+                    onClick={() => {
+                      console.log("active.artTag");
+                      setEdit(true);
+                    }}
+                  >
+                    Edit <EditOutlined />
+                  </Button>
+                  <Button
+                    type="round"
+                    style={{
+                      height: 32,
+                      color: "white",
+                      background: "#D74C7F",
+                      minWidth: 45,
+                      border: "none",
+                    }}
+                    onClick={() => setShowConfirmDelete(true)}
+                  >
+                    Delete <DeleteOutlined />
+                  </Button>
+                </Row>
+              )}
 
               <Modal
                 centered
@@ -824,6 +920,7 @@ const Profile = () => {
                   Submit <CheckOutlined />
                 </Button>
               </Row>
+
               <Modal
                 centered
                 onCancel={() => setShowConfirmEdit(false)}
@@ -863,21 +960,24 @@ const Profile = () => {
                         width: "95%",
                         border: "none",
                       }}
-                      onClick={() =>
+                      onClick={() => {
+                        //setShowConfirmEdit(false);
                         confirmEdit(
                           active.artworkID,
                           editName,
                           editDesc,
                           editTag,
                           active.url
-                        )
-                      }
+                        );
+                      }}
                     >
                       Save <EditOutlined />
                     </Button>
                   </Col>
                 </Row>
               </Modal>
+
+
               <Modal
                 centered
                 onCancel={() => setShowCompleteEdit(false)}
