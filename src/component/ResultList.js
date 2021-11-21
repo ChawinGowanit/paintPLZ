@@ -16,7 +16,7 @@ const ResultList = ({list})=>  {
     function redirect(item) {
       const cookies = new Cookies();
       console.log('ddd')
-      cookies.set("currentUser", item, { path: '/' });
+      cookies.set("profileUser", item, { path: '/' });
       window.location.replace("http://localhost:3000/profile")
     }
 
