@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './ResultList.css'
 import userPic from '../user.png'
+import {AiFillEye , AiFillStar} from 'react-icons/ai'
+import {MdMessage} from 'react-icons/md'
 // 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Drawn_love_hearts.svg/2483px-Drawn_love_hearts.svg.png' 
 const ResultList = ({list})=>  {
     
     const listItems = list.map((item , index) =>
-        <div className = 'indivInfo' style = {{backgroundColor : (index%2==1)? 'white': '#EAEAEA'}}>
+        <div className = 'indivInfo' style = {{backgroundColor : (index%2==0)? 'white': '#EAEAEA'}}>
           
           <div className = 'half-sec' style = {{paddingLeft : 0}}>
               <div className = 'frame'>
@@ -15,19 +17,19 @@ const ResultList = ({list})=>  {
             
               
               <div className = 'nameandrating'>
-                  <text>{item.name} {item.surname}</text>
-                  <text>{item.rating}</text>
+                  
+                    <h2 className = 'h2' style = {{height : 16 , fontSize : 16 , marginTop : 27, }}>{item.name} {item.surname}</h2>
+                    <h2 className = 'h2' style = {{height : 16 , fontSize : 14 , marginTop : 0, }}><AiFillStar style = {{alignSelf : 'center' , marginTop : 0, color : '#00CD90', marginRight : 4}} size = {16}/>{item.rating}</h2>
+                  
               </div>
           </div>
             <div className = 'half-sec half-sec-end' >
-            <input className = 'button' type="button"
+            <button className = 'button' 
               
-              value = 'View Profile'
-            />
-             <input className = 'button button-end' type="button"
               
-              value = 'Message'
-            />
+            >View Profile<AiFillEye style = {{alignSelf : 'center' , marginLeft : 4}}/></button>
+             <button className = 'button button-end' onClick = {()=> console.log(5)}>Message<MdMessage style = {{alignSelf : 'center' , marginLeft : 4}}/></button>
+           
             </div>
        
           

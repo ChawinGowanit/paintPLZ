@@ -5,6 +5,11 @@ import CatagoryItem from './component/CatagoryItem';
 import axios from 'axios';
 import logo from './logo.png'
 import userPic from './user.png'
+import {AiOutlineSearch, AiOutlineInfoCircle , AiOutlineCheck} from 'react-icons/ai'
+import {HiHome} from 'react-icons/hi'
+import {MdBlock} from 'react-icons/md'
+
+
 function SearchScreen() {
   
   const [result , setResult] = useState(null) ; 
@@ -23,20 +28,20 @@ function SearchScreen() {
   const [allTag , setTags] = useState([]); 
   const [tagsTest ,setTagsTest ]  = useState([]) ; 
 
-  const searchResult = [
-    {
-     "userID": "00000002",
-     "name" : "Zedong",
-     "surname" : "Mao",
-     "rating" : 5.0
-    },
-    {
-     "userID": "00000003",
-     "name" : "Vladimir",
-     "surname" : "Lenin",
-     "rating" : 5.0
-    }
- ]
+//   const searchResult = [
+//     {
+//      "userID": "00000002",
+//      "name" : "Zedong",
+//      "surname" : "Mao",
+//      "rating" : 5.0
+//     },
+//     {
+//      "userID": "00000003",
+//      "name" : "Vladimir",
+//      "surname" : "Lenin",
+//      "rating" : 5.0
+//     }
+//  ]
 
 
 
@@ -50,13 +55,20 @@ function SearchScreen() {
   }
   
   function addTag(x, t) {
-    
+    var i ; 
     var y = x.slice(0); 
-    
-    var result = y.filter(item => item.tagName != t.tagName)
-    result.push(t); 
-
-    setTagsTest(result) ; 
+    console.log(y)
+    for (i = 0 ; i< y.length ; i++ ){
+      if (y[i].tagName === t.tagName){
+        
+        setTagsTest(y);
+        setSearchTagVal(''); 
+        setSearchHidden(t.tagName);
+        return null ; 
+      }
+    }
+    y.push(t); 
+    setTagsTest(y) ; 
     setSearchTagVal(''); 
     setSearchHidden(t.tagName);
 
@@ -113,13 +125,13 @@ useEffect(() => {
       </div>
       <div className = 'half-user'>
         <div className = 'home-button'>
-            Home
+            <HiHome style = {{alignSelf : 'center', marginBottom : 4 , marginRight : 4 }} />Home
         </div>
         <div className = 'search-button'>
-            Search Artist
+        <AiOutlineSearch style = {{alignSelf : 'center', marginBottom : 4, marginRight : 4}}  size = {20}/>Search Artist
         </div>
         <div className = 'home-button'>
-            About
+            <AiOutlineInfoCircle style = {{alignSelf : 'center', marginBottom : 4, marginRight : 4}}  size = {20}/>About
         </div>
       </div>
     </div>
@@ -137,7 +149,8 @@ useEffect(() => {
                 id = 'search-text'
                 placeholder="Search by Artist's name" //Search by Artist's name
                 onChange = {(e) => setinputVal(e.target.value)}
-                
+                autoComplete = 'off'
+                autoCorrect = 'off'
                 
               >
             
@@ -146,10 +159,10 @@ useEffect(() => {
               
             
            
-            <input className = 'button text-style' type="button"
+            <button className = 'button-main' 
               onClick ={getSearchResult}
-              value = 'Submit'
-            />
+              
+            >Submit<AiOutlineCheck style = {{alignSelf : 'center', marginLeft : 4}}/></button>
           
             </div>
           
@@ -295,12 +308,12 @@ useEffect(() => {
     
     <div id = 'result-pane'>
       <div id = 'header'>
-          <text style = {{alignSelf : 'center'}}>Result</text>
+          Result<AiOutlineSearch style = {{alignSelf : 'center'}}  size = {24}/>
           
       </div>
       
       {result.length === 0 ?  <div id  = 'notfound-result-pane' >
-          Artist Not Found 
+          <MdBlock style =  {{alignSelf : 'center'}} size = {64}/>Artist Not Found 
            
       </div>
        :<ResultList list = {result}/>}
