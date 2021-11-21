@@ -212,6 +212,7 @@ const Profile = () => {
         }
       );
       setEdit(false);
+      setActive(null);
       setShowConfirmEdit(false);
       setShowCompleteEdit(true);
       getProfile(userID);
