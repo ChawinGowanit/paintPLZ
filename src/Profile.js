@@ -120,7 +120,7 @@ const Profile = () => {
         console.log("Response:", res);
         setUser(res.data);
         setArtwork(res.data.artworks);
-        setMongoArtwork(res.data.mongoartworks);
+        setMongoArtwork(res.data.mongoArtworks);
       })
       .catch(function (error) {
         console.log(error);
