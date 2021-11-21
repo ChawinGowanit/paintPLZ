@@ -179,6 +179,7 @@ const Profile = () => {
           },
         }
       );
+      setEdit(false);
       setShowConfirmEdit(false);
       setShowCompleteEdit(true);
       getProfile(userID);
@@ -901,6 +902,7 @@ const Profile = () => {
                         border: "none",
                       }}
                       onClick={() => {
+                        setEdit(false);
                         setShowCompleteEdit(false);
                         setShowConfirmEdit(false);
                         setActive(null);
