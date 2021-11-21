@@ -175,11 +175,11 @@ const Profile = () => {
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
-            artworkUrl: "image 1.png",
+           // artworkUrl: "image 1.png",
           },
         }
       );
-
+      setShowConfirmEdit(false);
       setShowCompleteEdit(true);
       getProfile(userID);
     } catch (err) {
