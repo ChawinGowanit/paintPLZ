@@ -50,6 +50,8 @@ function Home() {
       cookies.set("currentUser", response.data, { path: '/' })
       if (response.data.userType){
         window.location.replace("http://localhost:3000/profile")
+        const profileCookies = new Cookies();
+        profileCookies.set("profileUser", response.data, { path: '/' })
       }
       else {
         window.location.replace("http://localhost:3000/search")
