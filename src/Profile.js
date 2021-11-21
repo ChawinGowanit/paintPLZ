@@ -146,7 +146,6 @@ const Profile = () => {
           method: "POST",
           data: {
             userID: user.userID,
-            mongo : false,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
@@ -169,12 +168,11 @@ const Profile = () => {
   const confirmUploadMongo = async (name, desc, tag, url) => {
     try {
       const res = await axios(
-        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload",
+        "http://localhost:1323/api/paintplz/v1/artist_profile/artwork/upload_mongo",
         {
           method: "POST",
           data: {
             userID: user.userID,
-            mongo : true,
             artworkName: name,
             artworkDescription: desc,
             artTag: tag,
