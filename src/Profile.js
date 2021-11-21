@@ -50,7 +50,7 @@ const Profile = () => {
   const [uploadUrl, setUploadUrl] = useState(null);
   const [artwork, setArtwork] = useState([]);
   const [active, setActive] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -213,7 +213,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout className="bg">
+    <Layout className="bgn">
       {user && (
         <Content
           style={{
