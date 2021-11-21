@@ -54,11 +54,13 @@ const Profile = () => {
   const [active, setActive] = useState(null);
   const [user, setUser] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
+  const [userID, setUserID] = useState(null);
 
   useEffect(() => {
     const cookies = new Cookies();
+    setUserID(cookies.get("profileUser").userID);
     getProfile(cookies.get("profileUser").userID);
-    setIsOwner(cookies.get("profileUser") === cookies.get("currentUser"));
+    setIsOwner(cookies.get("profileUser").userID === cookies.get("currentUser").userID);
     getApiOfTag();
   }, []);
 
@@ -155,7 +157,7 @@ const Profile = () => {
       setUploaded(false);
       setUpload(false);
       setShowCompleteUpload(true);
-      getProfile(user.username);
+      getProfile(userID);
     } catch (err) {
       throw err;
     }
@@ -179,7 +181,7 @@ const Profile = () => {
       );
 
       setShowCompleteEdit(true);
-      getProfile();
+      getProfile(userID);
     } catch (err) {
       throw err;
     }
@@ -196,7 +198,8 @@ const Profile = () => {
       );
       setShowConfirmDelete(false);
       setShowCompleteDelete(true);
-      getProfile();
+
+      getProfile(userID);
     } catch (err) {
       throw err;
     }
