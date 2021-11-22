@@ -657,7 +657,7 @@ const Profile = () => {
                 <Col span={16}>
                   <img
                     style={{ maxHeight: "100%", width: "100%" }}
-                    src={active.url}
+                    src={active.url ? active.url : "artwork2.jpg"}
                   />
                 </Col>
                 <Col
