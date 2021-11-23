@@ -67,6 +67,10 @@ const Profile = () => {
     getApiOfTag();
   }, []);
 
+  useEffect(() => {
+    console.log(showCompleteUpload);
+  }, [showCompleteUpload]);
+
   function removeFromEditTag(text) {
     var newTag = editTag.filter((item) => {
       return item !== text;
@@ -155,13 +159,13 @@ const Profile = () => {
           },
         }
       );
+      setShowCompleteUpload(true);
       setUploadDesc(null);
       setUploadName(null);
       setUploadTag([]);
       setUploaded(false);
       setUpload(false);
       setActive(null);
-      setShowCompleteUpload(true);
       getProfile(userID);
     } catch (err) {
       throw err;
@@ -183,12 +187,12 @@ const Profile = () => {
           },
         }
       );
+      setShowCompleteUpload(true);
       setUploadDesc(null);
       setUploadName(null);
       setUploadTag([]);
       setUploaded(false);
       setUpload(false);
-      setShowCompleteUpload(true);
       getProfile(userID);
     } catch (err) {
       throw err;
@@ -437,7 +441,7 @@ const Profile = () => {
                           <img
                             onClick={() => onclickPic(a)}
                             style={{ maxHeight: 167, marginRight: 20 }}
-                            src={a.url}
+                            src={a.url ? a.url : "artwork2.jpg"}
                           />
                         );
                       })}
@@ -607,41 +611,6 @@ const Profile = () => {
                 </Button>
               </Row>
             </Row>
-            <Modal
-              centered
-              onCancel={() => setShowCompleteUpload(false)}
-              visible={showCompleteUpload}
-              title="Upload Completed"
-              footer={null}
-            >
-              <Row
-                style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
-              >
-                Artwork has been uploaded.
-              </Row>
-
-              <Row style={{ width: "100%", marginTop: 25 }}>
-                <Col span={24}>
-                  <Button
-                    type="round"
-                    style={{
-                      width: "95%",
-                      color: "white",
-                      background: "#4CD75F",
-                      border: "none",
-                    }}
-                    onClick={() => {
-                      setActive(null);
-                      setShowCompleteUpload(false);
-                     
-                      //setShowConfirmUpload(false);
-                    }}
-                  >
-                    Close
-                  </Button>
-                </Col>
-              </Row>
-            </Modal>
           </Modal>
 
           {active && (
@@ -1008,6 +977,40 @@ const Profile = () => {
               </Modal>
             </Modal>
           )}
+
+          <Modal
+            centered
+            onOk={() => setShowCompleteUpload(false)}
+            onCancel={() => setShowCompleteUpload(false)}
+            visible={showCompleteUpload}
+            title="Upload Completed"
+            footer={null}
+          >
+            <Row style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
+              Artwork has been uploaded.
+            </Row>
+
+            <Row style={{ width: "100%", marginTop: 25 }}>
+              <Col span={24}>
+                <Button
+                  type="round"
+                  style={{
+                    width: "95%",
+                    color: "white",
+                    background: "#4CD75F",
+                    border: "none",
+                  }}
+                  onClick={() => {
+                    setActive(null);
+                    setShowCompleteUpload(false);
+                    setUpload(false);
+                  }}
+                >
+                  Close
+                </Button>
+              </Col>
+            </Row>
+          </Modal>
         </Content>
       )}
     </Layout>
